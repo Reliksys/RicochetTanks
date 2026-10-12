@@ -44,6 +44,18 @@ public class Health : MonoBehaviour, IDamageable
 
     public void SetInvulnerableDuration(float seconds) => invulnerableAfterHit = Mathf.Max(0f, seconds);
 
+    // Бонус «Ремонт». Возвращает true, если броня действительно восстановилась.
+    public bool Heal(int amount)
+    {
+        if (IsDead || Current >= maxHealth) return false;
+        Current = Mathf.Min(maxHealth, Current + amount);
+        return true;
+    }
+
+    // Бонус «Щит»: неуязвимость на seconds (без мигания — мигание только после попадания)
+    public void GrantInvulnerability(float seconds) =>
+        invulnerableUntil = Mathf.Max(invulnerableUntil, Time.time + seconds);
+
     public void TakeDamage(int amount, DamageInfo info)
     {
         if (IsDead || IsInvulnerable) return;

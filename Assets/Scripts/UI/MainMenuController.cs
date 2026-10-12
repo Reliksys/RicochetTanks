@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,6 +26,7 @@ public class MainMenuController : MonoBehaviour
     TextMeshProUGUI mapNameText, mapDescText, presetDescText, totalText;
     Image mapPreview;
     Button mapPrev, mapNext;
+    RectTransform modContent;
 
     readonly List<MapData> maps = new List<MapData>();
     readonly List<ModifierData> selected = new List<ModifierData>();
@@ -97,7 +99,7 @@ public class MainMenuController : MonoBehaviour
         Button quick = UIKit.Btn(p, "БЫСТРАЯ ИГРА", 46, UIKit.Accent, UIKit.Dark, OnQuickPlay);
         UIKit.Place(quick, UIKit.Top, UIKit.Top, new Vector2(0, -410), new Vector2(560, 110));
 
-        var quickHint = UIKit.Label(p, "случайная карта и 1–2 случайных модификатора", 22, UIKit.TextDim);
+        var quickHint = UIKit.Label(p, "случайная карта и случайные модификаторы", 22, UIKit.TextDim);
         UIKit.Place(quickHint, UIKit.Top, UIKit.Top, new Vector2(0, -526), new Vector2(720, 32));
 
         Button custom = UIKit.Btn(p, "НАСТРОИТЬ БОЙ", 34, UIKit.ButtonColor, UIKit.TextColor, () => Show(customScreen));
@@ -180,19 +182,13 @@ public class MainMenuController : MonoBehaviour
         var modHint = UIKit.Label(right, "<color=#FF9E5C>×1.3</color> — сложнее, больше очков    <color=#8FCCFF>×0.7</color> — легче, меньше очков", 22, UIKit.TextDim, TextAlignmentOptions.Right);
         UIKit.Place(modHint, UIKit.TopRight, UIKit.TopRight, Vector2.zero, new Vector2(620, 40));
 
-        RectTransform grid = UIKit.Node("Grid", right);
-        grid.anchorMin = new Vector2(0, 0);
-        grid.anchorMax = new Vector2(1, 1);
-        grid.offsetMin = new Vector2(0, 0);
-        grid.offsetMax = new Vector2(0, -52);
-        var gl = grid.gameObject.AddComponent<GridLayoutGroup>();
-        gl.cellSize = new Vector2(530, 100);
-        gl.spacing = new Vector2(14, 12);
-        gl.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        gl.constraintCount = 2;
+        // Список модификаторов с прокруткой (колесо мыши / перетаскивание / полоса справа)
+        modContent = BuildScrollList(right, out RectTransform scrollArea);
+        scrollArea.offsetMax = new Vector2(0, -52);
 
-        foreach (ModifierData mod in database.modifiers)
-            if (mod != null) BuildModifierCard(grid, mod);
+        // Сначала самые сложные (большой множитель), в конце — облегчающие
+        foreach (ModifierData mod in database.modifiers.Where(m => m != null).OrderByDescending(m => m.scoreMultiplier))
+            BuildModifierCard(modContent, mod);
 
         // ---------- Низ: множитель и кнопки ----------
         totalText = UIKit.Label(p, "", 40, UIKit.Accent, TextAlignmentOptions.Left, bold: true);
@@ -204,6 +200,70 @@ public class MainMenuController : MonoBehaviour
         UIKit.Place(play, UIKit.BottomRight, UIKit.BottomRight, new Vector2(-40, 26), new Vector2(360, 90));
 
         return screen;
+    }
+
+    const float CardWidth = 520f, CardHeight = 100f, ScrollbarWidth = 14f;
+
+    // ScrollRect: Scroll → Viewport (маска) → Content (сетка 2 колонки, высота по содержимому) + полоса прокрутки
+    RectTransform BuildScrollList(Transform parent, out RectTransform scrollArea)
+    {
+        scrollArea = UIKit.Node("ModifierScroll", parent);
+        scrollArea.anchorMin = Vector2.zero;
+        scrollArea.anchorMax = Vector2.one;
+        scrollArea.offsetMin = Vector2.zero;
+        scrollArea.offsetMax = Vector2.zero;
+        var hitArea = scrollArea.gameObject.AddComponent<Image>();
+        hitArea.color = Color.clear; // чтобы колесо работало и между карточками
+
+        RectTransform viewport = UIKit.Node("Viewport", scrollArea);
+        viewport.anchorMin = Vector2.zero;
+        viewport.anchorMax = Vector2.one;
+        viewport.offsetMin = Vector2.zero;
+        viewport.offsetMax = new Vector2(-(ScrollbarWidth + 12f), 0);
+        viewport.gameObject.AddComponent<RectMask2D>();
+
+        RectTransform content = UIKit.Node("Content", viewport);
+        content.anchorMin = new Vector2(0, 1);
+        content.anchorMax = new Vector2(1, 1);
+        content.pivot = new Vector2(0.5f, 1f);
+        content.offsetMin = Vector2.zero;
+        content.offsetMax = Vector2.zero;
+        var gl = content.gameObject.AddComponent<GridLayoutGroup>();
+        gl.cellSize = new Vector2(CardWidth, CardHeight);
+        gl.spacing = new Vector2(14, 12);
+        gl.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        gl.constraintCount = 2;
+        gl.padding = new RectOffset(0, 0, 0, 8);
+        var fitter = content.gameObject.AddComponent<ContentSizeFitter>();
+        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        // Полоса прокрутки
+        Image track = UIKit.Box(scrollArea, "Scrollbar", UIKit.Dark, raycast: true);
+        RectTransform trackRt = track.rectTransform;
+        trackRt.anchorMin = new Vector2(1, 0);
+        trackRt.anchorMax = new Vector2(1, 1);
+        trackRt.pivot = new Vector2(1, 0.5f);
+        trackRt.sizeDelta = new Vector2(ScrollbarWidth, 0);
+        trackRt.anchoredPosition = Vector2.zero;
+        RectTransform slidingArea = UIKit.Node("SlidingArea", track.transform);
+        UIKit.Stretch(slidingArea);
+        Image handle = UIKit.Box(slidingArea, "Handle", UIKit.Accent, raycast: true);
+        UIKit.Stretch(handle);
+        var bar = track.gameObject.AddComponent<Scrollbar>();
+        bar.handleRect = handle.rectTransform;
+        bar.targetGraphic = handle;
+        bar.direction = Scrollbar.Direction.BottomToTop;
+
+        var scroll = scrollArea.gameObject.AddComponent<ScrollRect>();
+        scroll.viewport = viewport;
+        scroll.content = content;
+        scroll.horizontal = false;
+        scroll.vertical = true;
+        scroll.movementType = ScrollRect.MovementType.Clamped;
+        scroll.scrollSensitivity = 35f;
+        scroll.verticalScrollbar = bar;
+        scroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHide;
+        return content;
     }
 
     void BuildModifierCard(Transform grid, ModifierData mod)
@@ -225,8 +285,12 @@ public class MainMenuController : MonoBehaviour
         var name = UIKit.Label(bg.transform, mod.displayName, 27, UIKit.TextColor, TextAlignmentOptions.TopLeft, bold: true);
         UIKit.Place(name, UIKit.TopLeft, UIKit.TopLeft, new Vector2(textX, -8), new Vector2(300, 36));
 
-        var desc = UIKit.Label(bg.transform, mod.description, 18, UIKit.TextDim, TextAlignmentOptions.TopLeft);
-        UIKit.Place(desc, UIKit.TopLeft, UIKit.TopLeft, new Vector2(textX, -44), new Vector2(530 - textX - 90, 52));
+        string descText = mod.description;
+        var needs = mod.requires != null ? mod.requires.Where(r => r != null).Select(r => "«" + r.displayName + "»").ToList() : null;
+        if (needs != null && needs.Count > 0)
+            descText += $"\n<color=#F5C44D>Включает {string.Join(", ", needs)}</color>";
+        var desc = UIKit.Label(bg.transform, descText, 18, UIKit.TextDim, TextAlignmentOptions.TopLeft);
+        UIKit.Place(desc, UIKit.TopLeft, UIKit.TopLeft, new Vector2(textX, -44), new Vector2(CardWidth - textX - 90, 52));
 
         Color multColor = mod.scoreMultiplier > 1f ? UIKit.Harder : mod.scoreMultiplier < 1f ? UIKit.Easier : UIKit.TextColor;
         var mult = UIKit.Label(bg.transform, mod.MultiplierText, 32, multColor, TextAlignmentOptions.Right, bold: true);
@@ -251,6 +315,7 @@ public class MainMenuController : MonoBehaviour
     {
         mainScreen.gameObject.SetActive(screen == mainScreen);
         customScreen.gameObject.SetActive(screen == customScreen);
+        if (screen == customScreen && modContent != null) modContent.anchoredPosition = Vector2.zero; // список — с начала
         Click();
     }
 
@@ -300,7 +365,8 @@ public class MainMenuController : MonoBehaviour
         {
             selected.Clear();
             foreach (ModifierData m in preset.modifiers)
-                if (m != null) selected.Add(m);
+                foreach (ModifierData r in ModifierApplier.WithRequirements(m)) // со всем, что модификатор требует
+                    if (!selected.Contains(r)) selected.Add(r);
         }
         Refresh();
     }
@@ -309,14 +375,28 @@ public class MainMenuController : MonoBehaviour
     {
         if (selected.Contains(mod))
         {
+            // Снимаем модификатор и всё, что без него не работает (сняли «Резиновые» — снимается «Снайпер»)
             selected.Remove(mod);
+            selected.RemoveAll(m => ModifierApplier.Requires(m, mod));
         }
         else
         {
-            // Снимаем несовместимые (одна группа, например две брони)
-            if (!string.IsNullOrEmpty(mod.group))
-                selected.RemoveAll(m => m != null && m.group == mod.group);
-            selected.Add(mod);
+            List<ModifierData> adding = ModifierApplier.WithRequirements(mod); // «Снайпер» включает «Резиновые снаряды»
+            foreach (ModifierData a in adding)
+            {
+                if (selected.Contains(a)) continue;
+                // Снимаем несовместимые (одна группа, например две брони) и то, что от них зависело
+                if (!string.IsNullOrEmpty(a.group))
+                {
+                    var conflicts = selected.FindAll(m => m != null && m.group == a.group);
+                    foreach (ModifierData c in conflicts)
+                    {
+                        selected.Remove(c);
+                        selected.RemoveAll(m => ModifierApplier.Requires(m, c));
+                    }
+                }
+                selected.Add(a);
+            }
         }
         selectedPreset = null; // ручной выбор = свой набор
         Refresh();

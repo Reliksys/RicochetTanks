@@ -20,6 +20,7 @@ public static class GameRules
     public static int PlayerMaxActiveBullets = 0; // 0 = как в префабе; "Один патрон" = 1
     public static bool ShowAimLine = true;        // "Вслепую" = false
     public static int AimPreviewBounces = 1;      // сколько отскоков рисует прицел; "Снайпер" = 3
+    public static float PlayerSlide = 0f;         // инерция танка в секундах, 0 = мгновенно; "Скользкий пол" = 0.35
 
     // ---------- Враги и волны (читает WaveManager / ИИ врагов) ----------
     public static float EnemyCountMultiplier = 1f;    // "Орда" = 1.5
@@ -28,7 +29,7 @@ public static class GameRules
     public static bool EnemyDodge = false;            // "Ловкие враги": уворачиваются от снарядов
 
     // ---------- Бонусы ----------
-    public static bool PowerUpsEnabled = false;       // "Усиления на поле" (если успеем)
+    public static bool PowerUpsEnabled = false;       // "Усиления на поле": PowerUpSpawner раскладывает бонусы
 
     // ---------- Очки ----------
     // Произведение множителей всех выбранных модификаторов. Итог = очки × ScoreMultiplier.
@@ -46,6 +47,7 @@ public static class GameRules
         PlayerMaxActiveBullets = 0;
         ShowAimLine = true;
         AimPreviewBounces = 1;
+        PlayerSlide = 0f;
         EnemyCountMultiplier = 1f;
         EnemySpeedMultiplier = 1f;
         EnemyFireRateMultiplier = 1f;

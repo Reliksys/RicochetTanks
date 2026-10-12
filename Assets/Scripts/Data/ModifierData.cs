@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // Один модификатор. Создаётся в окне Project: правой кнопкой → Create → Tanks → Modifier.
@@ -15,12 +16,16 @@ public class ModifierData : ScriptableObject
     public bool allowInQuickPlay = true;
     [Tooltip("Модификаторы с одинаковой группой нельзя выбрать вместе (например, «armor»). Пусто = без группы.")]
     public string group = "";
+    [Tooltip("Без этих модификаторов этот не имеет смысла: они включаются вместе с ним (и в меню, и в «Быстрой игре»). Пример: «Снайпер» требует «Резиновые снаряды».")]
+    public List<ModifierData> requires = new List<ModifierData>();
 
     [Header("Игрок (0 = не менять)")]
     public int playerMaxHealth = 0;
     public int playerMaxActiveBullets = 0;
     public int aimPreviewBounces = 0;
     public bool hideAimLine = false;
+    [Tooltip("Инерция танка игрока в секундах (занос). 0 = не менять")]
+    public float playerSlide = 0f;
 
     [Header("Снаряды")]
     public int extraBounces = 0;

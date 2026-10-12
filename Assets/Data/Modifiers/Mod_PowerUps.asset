@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b69b8d4fd7146588ea62b9230cf5f29, type: 3}
+  m_Name: Mod_PowerUps
+  m_EditorClassIdentifier: 
+  displayName: "\u0423\u0441\u0438\u043b\u0435\u043d\u0438\u044f \u043d\u0430 \u043f\u043e\u043b\u0435"
+  description: "\u0411\u043e\u043d\u0443\u0441\u044b \u043d\u0430 \u0430\u0440\u0435\u043d\u0435: \u0440\u0435\u043c\u043e\u043d\u0442, \u0449\u0438\u0442, \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c, \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0440\u0435\u043b."
+  icon: {fileID: 21300000, guid: d12b33828a884751927d76e866fefd17, type: 3}
+  scoreMultiplier: 0.8
+  allowInQuickPlay: 1
+  group: 
+  requires: []
+  playerMaxHealth: 0
+  playerMaxActiveBullets: 0
+  aimPreviewBounces: 0
+  hideAimLine: 0
+  playerSlide: 0
+  extraBounces: 0
+  ownBulletsHurtOwner: 0
+  superhot: 0
+  enemyCountMultiplier: 1
+  enemySpeedMultiplier: 1
+  enemyFireRateMultiplier: 1
+  enemyDodge: 0
+  powerUps: 1

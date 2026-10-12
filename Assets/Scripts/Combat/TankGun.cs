@@ -17,7 +17,11 @@ public class TankGun : MonoBehaviour
     public Bullet BulletPrefab => bulletPrefab;
     public float MuzzleDistance => muzzle ? Vector2.Distance(transform.position, muzzle.position) : 0.6f;
     public int MaxActiveBullets { get => maxActiveBullets; set => maxActiveBullets = Mathf.Max(1, value); }
-    public bool CanFire => Time.time >= nextFireTime && Bullet.CountOwnedBy(gameObject) < maxActiveBullets;
+    public bool CanFire => Time.time >= nextFireTime && Bullet.CountOwnedBy(gameObject) < maxActiveBullets + BonusBullets;
+
+    // Бонус «Скорострел» (PlayerBuffs): >1 = стреляет чаще; BonusBullets — сколько снарядов сверх лимита можно держать на поле
+    public float FireRateMultiplier { get; set; } = 1f;
+    public int BonusBullets { get; set; } = 0;
 
     public event Action<Bullet> Fired; // для звука/вспышки/тряски камеры
     // Глобально: кто-то выстрелил (для звука и тряски камеры)
@@ -53,7 +57,7 @@ public class TankGun : MonoBehaviour
     {
         if (!CanFire || bulletPrefab == null) return false;
 
-        nextFireTime = Time.time + fireCooldown;
+        nextFireTime = Time.time + fireCooldown / Mathf.Max(0.1f, FireRateMultiplier);
         Bullet bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         bullet.Launch(AimDirection, gameObject, MuzzleDistance);
         Fired?.Invoke(bullet);

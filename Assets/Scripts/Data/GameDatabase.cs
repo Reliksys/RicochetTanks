@@ -23,6 +23,8 @@ public class GameDatabase : ScriptableObject
     }
 
     // Случайные модификаторы для быстрой игры: только разрешённые, не больше одного из группы.
+    // Если модификатор чего-то требует (Снайпер → Резиновые снаряды), требуемый добавляется сам,
+    // поэтому модификаторов может оказаться больше quickPlayMaxModifiers (например, 3).
     public List<ModifierData> RandomQuickPlayModifiers()
     {
         var pool = modifiers.FindAll(m => m != null && m.allowInQuickPlay);
@@ -33,13 +35,15 @@ public class GameDatabase : ScriptableObject
             (pool[i], pool[j]) = (pool[j], pool[i]);
         }
 
-        int count = Random.Range(quickPlayMinModifiers, quickPlayMaxModifiers + 1);
+        int picks = Random.Range(quickPlayMinModifiers, quickPlayMaxModifiers + 1);
         var result = new List<ModifierData>();
         foreach (var m in pool)
         {
-            if (result.Count >= count) break;
-            if (!ModifierApplier.CanAdd(result, m)) continue;
-            result.Add(m);
+            if (picks <= 0) break;
+            if (!ModifierApplier.CanAddWithRequirements(result, m)) continue;
+            foreach (ModifierData r in ModifierApplier.WithRequirements(m))
+                if (!result.Contains(r)) result.Add(r);
+            picks--;
         }
         return result;
     }

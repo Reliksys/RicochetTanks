@@ -19,6 +19,7 @@ public static class ModifierApplier
             if (m.playerMaxActiveBullets > 0) GameRules.PlayerMaxActiveBullets = m.playerMaxActiveBullets;
             if (m.aimPreviewBounces > 0) GameRules.AimPreviewBounces = Mathf.Max(GameRules.AimPreviewBounces, m.aimPreviewBounces);
             if (m.hideAimLine) GameRules.ShowAimLine = false;
+            if (m.playerSlide > 0f) GameRules.PlayerSlide = Mathf.Max(GameRules.PlayerSlide, m.playerSlide);
 
             GameRules.ExtraBounces += m.extraBounces;
             if (m.ownBulletsHurtOwner) GameRules.OwnBulletsHurtOwner = true;
@@ -52,6 +53,40 @@ public static class ModifierApplier
             if (m != null && m.group == candidate.group) return false;
         return true;
     }
+
+    // Модификатор вместе со всем, что он требует (requires), без повторов. Порядок: сначала требуемые.
+    public static List<ModifierData> WithRequirements(ModifierData mod)
+    {
+        var result = new List<ModifierData>();
+        Collect(mod, result, 0);
+        return result;
+    }
+
+    static void Collect(ModifierData mod, List<ModifierData> result, int depth)
+    {
+        if (mod == null || result.Contains(mod) || depth > 5) return;
+        if (mod.requires != null)
+            foreach (ModifierData r in mod.requires) Collect(r, result, depth + 1);
+        result.Add(mod);
+    }
+
+    // Можно ли добавить модификатор ВМЕСТЕ с его требованиями (ни один не конфликтует с уже выбранными)
+    public static bool CanAddWithRequirements(List<ModifierData> selected, ModifierData candidate)
+    {
+        if (candidate == null || selected.Contains(candidate)) return false;
+        var trial = new List<ModifierData>(selected);
+        foreach (ModifierData m in WithRequirements(candidate))
+        {
+            if (trial.Contains(m)) continue;
+            if (!CanAdd(trial, m)) return false;
+            trial.Add(m);
+        }
+        return true;
+    }
+
+    // Требует ли mod модификатор other (напрямую или через цепочку)
+    public static bool Requires(ModifierData mod, ModifierData other) =>
+        mod != null && other != null && mod != other && WithRequirements(mod).Contains(other);
 
     public static string Describe(IEnumerable<ModifierData> modifiers)
     {

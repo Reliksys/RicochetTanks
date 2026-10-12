@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Preset_Easy
   m_EditorClassIdentifier: 
   displayName: "\u041b\u0451\u0433\u043a\u0438\u0439"
-  description: "\u0411\u043e\u043b\u044c\u0448\u0435 \u0431\u0440\u043e\u043d\u0438 \u0438 \u043f\u043e\u0434\u0441\u043a\u0430\u0437\u043a\u0430 \u043f\u0440\u0438\u0446\u0435\u043b\u0430 \u043d\u0430 3 \u043e\u0442\u0441\u043a\u043e\u043a\u0430."
+  description: "\u0422\u043e\u043b\u0441\u0442\u0430\u044f \u0431\u0440\u043e\u043d\u044f, \u0440\u0435\u0437\u0438\u043d\u043e\u0432\u044b\u0435 \u0441\u043d\u0430\u0440\u044f\u0434\u044b \u0438 \u043f\u0440\u0438\u0446\u0435\u043b \u043d\u0430 3 \u043e\u0442\u0441\u043a\u043e\u043a\u0430."
   modifiers:
   - {fileID: 11400000, guid: 5f38491358904f84854799c3b0073076, type: 2}
   - {fileID: 11400000, guid: 83cd5c80b80f4fb3818b2596e58ac0cf, type: 2}
-  enemyTier: 1
+  - {fileID: 11400000, guid: 83f981cc59c64b8b99cec6eb69e65e4c, type: 2}

@@ -14,7 +14,7 @@ public class GameHUD : MonoBehaviour
 
     Canvas canvas;
     RectTransform root;
-    TextMeshProUGUI scoreText, multText, waveText, announceText;
+    TextMeshProUGUI scoreText, multText, waveText, announceText, buffText;
     CanvasGroup announceGroup, hintGroup;
     RectTransform hpRow;
     readonly List<Image> hpPips = new List<Image>();
@@ -35,6 +35,7 @@ public class GameHUD : MonoBehaviour
         WaveManager.WaveStarted += OnWaveStarted;
         WaveManager.WaveCleared += OnWaveCleared;
         GameManager.GameOver += OnGameOver;
+        PowerUp.AnyPicked += OnPowerUpPicked;
     }
 
     void OnDisable()
@@ -44,6 +45,7 @@ public class GameHUD : MonoBehaviour
         WaveManager.WaveStarted -= OnWaveStarted;
         WaveManager.WaveCleared -= OnWaveCleared;
         GameManager.GameOver -= OnGameOver;
+        PowerUp.AnyPicked -= OnPowerUpPicked;
     }
 
     void Start()
@@ -75,6 +77,10 @@ public class GameHUD : MonoBehaviour
         hl.childControlWidth = false;
         hl.childControlHeight = false;
         hl.childAlignment = TextAnchor.MiddleLeft;
+
+        // Под бронёй: активные бонусы («Усиления на поле»)
+        buffText = UIKit.Label(root, "", 26, UIKit.TextColor, TextAlignmentOptions.Left, bold: true);
+        UIKit.Place(buffText, UIKit.TopLeft, UIKit.TopLeft, new Vector2(24, -96), new Vector2(900, 40));
 
         // --- По центру сверху: волна ---
         Image wavePanel = UIKit.Box(root, "Wave", UIKit.PanelColor);
@@ -141,6 +147,9 @@ public class GameHUD : MonoBehaviour
             foreach (Image pip in hpPips) pip.color = new Color(0.25f, 0.25f, 0.22f, 1f);
         }
 
+        // Бонусы
+        buffText.text = PlayerBuffs.Instance != null ? PlayerBuffs.Instance.Describe() : "";
+
         // Волна
         if (waves != null && !GameManager.IsGameOver)
         {
@@ -197,14 +206,23 @@ public class GameHUD : MonoBehaviour
             return;
         }
 
+        bool ricochet = points >= ricochetPointsThreshold;
+        SpawnPopup(where, ricochet ? $"+{points}  РИКОШЕТ!" : $"+{points}", ricochet ? 40 : 32,
+                   ricochet ? UIKit.Accent : UIKit.TextColor);
+    }
+
+    void OnPowerUpPicked(PowerUpType type, Vector2 where) =>
+        SpawnPopup(where, "+" + PowerUp.Title(type), 36, PowerUp.ColorOf(type));
+
+    // Всплывающий текст над точкой мира
+    void SpawnPopup(Vector2 where, string text, float size, Color color)
+    {
         Camera cam = Camera.main;
-        if (cam == null) return;
+        if (cam == null || root == null) return;
         Vector2 screen = cam.WorldToScreenPoint(where);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(root, screen, null, out Vector2 local);
 
-        bool ricochet = points >= ricochetPointsThreshold;
-        TextMeshProUGUI t = UIKit.Label(root, ricochet ? $"+{points}  РИКОШЕТ!" : $"+{points}", ricochet ? 40 : 32,
-                                        ricochet ? UIKit.Accent : UIKit.TextColor, TextAlignmentOptions.Center, bold: true);
+        TextMeshProUGUI t = UIKit.Label(root, text, size, color, TextAlignmentOptions.Center, bold: true);
         RectTransform rt = t.rectTransform;
         rt.anchorMin = rt.anchorMax = UIKit.Center;
         rt.sizeDelta = new Vector2(500, 60);

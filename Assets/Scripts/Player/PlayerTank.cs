@@ -14,6 +14,8 @@ public class PlayerTank : MonoBehaviour
     public static PlayerTank Instance { get; private set; } // чтобы враги легко нашли игрока
     public bool IsMoving => moveInput.sqrMagnitude > 0.01f;
     public TankGun Gun => gun;
+    // Множитель скорости от бонусов (PlayerBuffs). 1 = обычная скорость.
+    public float SpeedMultiplier { get; set; } = 1f;
 
     Rigidbody2D rb;
     TankGun gun;
@@ -87,6 +89,17 @@ public class PlayerTank : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.linearVelocity = moveInput * moveSpeed;
+        Vector2 target = moveInput * moveSpeed * SpeedMultiplier;
+
+        if (GameRules.PlayerSlide <= 0f)
+        {
+            rb.linearVelocity = target; // обычное управление: мгновенный старт и остановка
+            return;
+        }
+
+        // "Скользкий пол": скорость плавно догоняет желаемую — танк разгоняется, тормозит и заносит в поворотах.
+        // PlayerSlide — время (сек), за которое скорость проходит ~63% пути к желаемой.
+        float k = 1f - Mathf.Exp(-Time.fixedDeltaTime / GameRules.PlayerSlide);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, target, k);
     }
 }

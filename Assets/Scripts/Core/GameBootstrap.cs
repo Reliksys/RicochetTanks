@@ -46,6 +46,10 @@ public class GameBootstrap : MonoBehaviour
         PlacePlayer(CurrentMap);
         FitCamera(CurrentMap);
 
+        // Модификатор «Усиления на поле»: раскладчик бонусов создаётся кодом, настраивать в сцене ничего не нужно
+        if (GameRules.PowerUpsEnabled && GetComponent<PowerUpSpawner>() == null)
+            gameObject.AddComponent<PowerUpSpawner>();
+
         Debug.Log($"[Game] Режим: {RunConfig.ModeName} | Карта: {(RunConfig.Map ? RunConfig.Map.displayName : "тестовая")} | " +
                   $"Модификаторы: {ModifierApplier.Describe(RunConfig.Modifiers)} | Множитель ×{GameRules.ScoreMultiplier:0.##}");
     }
