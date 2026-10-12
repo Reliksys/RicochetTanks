@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 1
   destroyOnDeath: 1
+  invulnerableAfterHit: 0
 --- !u!114 &7266637331357599629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +161,7 @@ MonoBehaviour:
   moveSpeed: 4
   body: {fileID: 48233030604112412}
   bodyTurnSpeed: 720
+  invulnerabilityAfterHit: 1
 --- !u!120 &4916647377528263256
 LineRenderer:
   serializedVersion: 3
@@ -297,6 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3469460957079707832}
   - component: {fileID: 603361656662930412}
+  - component: {fileID: 7663615973610483224}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -380,6 +383,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &7663615973610483224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007184260772322230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3902dd5e30c19f040b9407991302cf64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurretFireAnimation
+  frames:
+  - {fileID: -8811328959021048948, guid: 7b8392363862f7342b01a236a752e5be, type: 3}
+  - {fileID: -1912051802828996012, guid: 7b8392363862f7342b01a236a752e5be, type: 3}
+  - {fileID: 2520159232730294462, guid: 7b8392363862f7342b01a236a752e5be, type: 3}
+  - {fileID: -1312108214607210734, guid: 7b8392363862f7342b01a236a752e5be, type: 3}
+  - {fileID: 3516325119185989437, guid: 7b8392363862f7342b01a236a752e5be, type: 3}
+  - {fileID: 7431873546203624555, guid: 7b8392363862f7342b01a236a752e5be, type: 3}
+  - {fileID: 6001530999571837591, guid: 7b8392363862f7342b01a236a752e5be, type: 3}
+  - {fileID: 2925946602418126454, guid: 7b8392363862f7342b01a236a752e5be, type: 3}
+  frameTime: 0.03
 --- !u!1 &6753318014922009673
 GameObject:
   m_ObjectHideFlags: 0

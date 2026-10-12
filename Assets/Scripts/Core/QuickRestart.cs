@@ -2,13 +2,22 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-// Нажми R, чтобы перезапустить текущую сцену. Временный помощник, потом рестартом займётся GameManager.
+// R = перезапустить бой, Esc = в главное меню.
 public class QuickRestart : MonoBehaviour
 {
     void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
-            Restart();
+        Keyboard kb = Keyboard.current;
+        if (kb == null) return;
+        if (kb.rKey.wasPressedThisFrame) Restart();
+        if (kb.escapeKey.wasPressedThisFrame) ToMenu();
+    }
+
+    // Esc = в главное меню (если сцена MainMenu добавлена в список сцен сборки)
+    public static void ToMenu()
+    {
+        if (Application.CanStreamedLevelBeLoaded("MainMenu"))
+            SceneManager.LoadScene("MainMenu");
     }
 
     public static void Restart()

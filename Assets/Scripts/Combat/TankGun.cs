@@ -20,6 +20,11 @@ public class TankGun : MonoBehaviour
     public bool CanFire => Time.time >= nextFireTime && Bullet.CountOwnedBy(gameObject) < maxActiveBullets;
 
     public event Action<Bullet> Fired; // для звука/вспышки/тряски камеры
+    // Глобально: кто-то выстрелил (для звука и тряски камеры)
+    public static event Action<TankGun, Bullet> AnyFired;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetStatics() => AnyFired = null;
 
     float nextFireTime;
 
@@ -52,6 +57,7 @@ public class TankGun : MonoBehaviour
         Bullet bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         bullet.Launch(AimDirection, gameObject, MuzzleDistance);
         Fired?.Invoke(bullet);
+        AnyFired?.Invoke(this, bullet);
         return true;
     }
 }
