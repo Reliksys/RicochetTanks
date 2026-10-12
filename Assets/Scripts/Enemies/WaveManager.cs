@@ -45,6 +45,8 @@ public class WaveManager : MonoBehaviour
     [Header("Спавн")]
     [SerializeField] float minPlayerDistance = 4f;   // не спавнить вплотную к игроку
     [SerializeField] float spawnCheckRadius = 0.5f;  // точка занята, если тут уже кто-то стоит
+    [Tooltip("Писать в консоль каждый спавн (тип, точка, координаты) — для отладки карт")]
+    [SerializeField] bool logSpawns = false;
 
     // Для UI: номер волны
     public static event Action<int> WaveStarted;
@@ -191,7 +193,9 @@ public class WaveManager : MonoBehaviour
         Transform point = PickSpawnPoint();
         if (point == null) return false;
 
-        EnemyAI enemy = Instantiate(queue.Dequeue(), (Vector2)point.position, Quaternion.identity);
+        EnemyAI prefab = queue.Dequeue();
+        EnemyAI enemy = Instantiate(prefab, (Vector2)point.position, Quaternion.identity);
+        if (logSpawns) Debug.Log($"[WaveManager] Волна {CurrentWave}: {prefab.name} в {point.name} {(Vector2)point.position} (карта {GameBootstrap.CurrentMap.name})");
         Physics2D.SyncTransforms(); // чтобы следующая проверка точки уже видела этого врага
 
         if (enemy.TryGetComponent(out Health health))

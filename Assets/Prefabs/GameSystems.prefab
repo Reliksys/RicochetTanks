@@ -75,6 +75,7 @@ MonoBehaviour:
   spawnInterval: 0.3
   minPlayerDistance: 4
   spawnCheckRadius: 0.5
+  logSpawns: 0
 --- !u!114 &9075975500520532010
 MonoBehaviour:
   m_ObjectHideFlags: 0
