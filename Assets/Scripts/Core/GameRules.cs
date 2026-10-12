@@ -25,6 +25,7 @@ public static class GameRules
     public static float EnemyCountMultiplier = 1f;    // "Орда" = 1.5
     public static float EnemySpeedMultiplier = 1f;    // "Адреналин" = 1.3
     public static float EnemyFireRateMultiplier = 1f; // "Адреналин" = 1.3 (больше = чаще стреляют)
+    public static bool EnemyDodge = false;            // "Ловкие враги": уворачиваются от снарядов
 
     // ---------- Бонусы ----------
     public static bool PowerUpsEnabled = false;       // "Усиления на поле" (если успеем)
@@ -48,6 +49,7 @@ public static class GameRules
         EnemyCountMultiplier = 1f;
         EnemySpeedMultiplier = 1f;
         EnemyFireRateMultiplier = 1f;
+        EnemyDodge = false;
         PowerUpsEnabled = false;
         ScoreMultiplier = 1f;
     }
