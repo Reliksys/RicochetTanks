@@ -16,6 +16,7 @@ public class TankGun : MonoBehaviour
     public Vector2 AimDirection { get; private set; } = Vector2.up; // куда реально смотрит ствол
     public Bullet BulletPrefab => bulletPrefab;
     public float MuzzleDistance => muzzle ? Vector2.Distance(transform.position, muzzle.position) : 0.6f;
+    public int MaxActiveBullets { get => maxActiveBullets; set => maxActiveBullets = Mathf.Max(1, value); }
     public bool CanFire => Time.time >= nextFireTime && Bullet.CountOwnedBy(gameObject) < maxActiveBullets;
 
     public event Action<Bullet> Fired; // для звука/вспышки/тряски камеры

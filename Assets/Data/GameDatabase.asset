@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f06a1c6b174ed5bcbb6c26c33557c7, type: 3}
+  m_Name: GameDatabase
+  m_EditorClassIdentifier: 
+  maps: []
+  modifiers:
+  - {fileID: 11400000, guid: bbb81bfd7ac94139b56ca98bd40df8d0, type: 2}
+  - {fileID: 11400000, guid: 256cca249d9c42008afa3de3fa3df8d8, type: 2}
+  - {fileID: 11400000, guid: f656a00c9c664167abb036ef961ef747, type: 2}
+  - {fileID: 11400000, guid: c0982916c474461e8c46473910920e28, type: 2}
+  - {fileID: 11400000, guid: 5853ced7481d43eea55f40d552285a87, type: 2}
+  - {fileID: 11400000, guid: b246deb02d57484b8257e11c1e78691c, type: 2}
+  - {fileID: 11400000, guid: 5f38491358904f84854799c3b0073076, type: 2}
+  - {fileID: 11400000, guid: 83f981cc59c64b8b99cec6eb69e65e4c, type: 2}
+  - {fileID: 11400000, guid: 83cd5c80b80f4fb3818b2596e58ac0cf, type: 2}
+  - {fileID: 11400000, guid: 7939f84407ac487e841734ac7021acea, type: 2}
+  presets:
+  - {fileID: 11400000, guid: 64621b37c50e412a91102f30b50f706b, type: 2}
+  - {fileID: 11400000, guid: 632a6bf8504747bfb13cdd834e911c1f, type: 2}
+  - {fileID: 11400000, guid: dc959f352e4341968aaba5d62fe998b8, type: 2}
+  defaultPreset: {fileID: 11400000, guid: 632a6bf8504747bfb13cdd834e911c1f, type: 2}
+  quickPlayMinModifiers: 1
+  quickPlayMaxModifiers: 2

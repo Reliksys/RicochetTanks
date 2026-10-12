@@ -9,6 +9,7 @@ public class PlayerTank : MonoBehaviour
     [SerializeField] float moveSpeed = 4f;
     [SerializeField] Transform body;               // спрайт корпуса, поворачивается по направлению движения
     [SerializeField] float bodyTurnSpeed = 720f;   // градусов в секунду
+    [SerializeField] float invulnerabilityAfterHit = 1f; // секунды неуязвимости после попадания
 
     public static PlayerTank Instance { get; private set; } // чтобы враги легко нашли игрока
     public bool IsMoving => moveInput.sqrMagnitude > 0.01f;
@@ -32,6 +33,18 @@ public class PlayerTank : MonoBehaviour
         rb.freezeRotation = true;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+    }
+
+    // Start вызывается после GameBootstrap.Awake, поэтому модификаторы уже применены
+    void Start()
+    {
+        if (TryGetComponent(out Health health))
+        {
+            health.SetMaxHealth(GameRules.PlayerMaxHealth);
+            health.SetInvulnerableDuration(invulnerabilityAfterHit);
+            if (!TryGetComponent(out DamageFlash _)) gameObject.AddComponent<DamageFlash>();
+        }
+        if (GameRules.PlayerMaxActiveBullets > 0) gun.MaxActiveBullets = GameRules.PlayerMaxActiveBullets;
     }
 
     void OnDestroy()

@@ -35,7 +35,8 @@ public class AimLine : MonoBehaviour
         if (!line.enabled) return;
 
         Bullet b = gun.BulletPrefab;
-        Ricochet.PredictPath(transform.position, gun.AimDirection, b.Radius, previewBounces,
+        int bounces = Mathf.Max(previewBounces, GameRules.AimPreviewBounces);
+        Ricochet.PredictPath(transform.position, gun.AimDirection, b.Radius, bounces,
                              maxLength, b.HitMask, gameObject, points);
 
         // Линию начинаем от дула, а не из центра танка
