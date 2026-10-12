@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4946148421403228093}
   - component: {fileID: 9075975500520532010}
   - component: {fileID: 8580377397200611912}
+  - component: {fileID: 8763775605063658497}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -108,3 +109,26 @@ MonoBehaviour:
   waveManager: {fileID: 0}
   showTempHud: 0
   showTempGameOver: 0
+--- !u!114 &8763775605063658497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576587424179501336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e803aed19e79118d9fa6884f664b1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BushManager
+  tiles:
+  - bush: {fileID: 11400000, guid: ae4c8abd3141f2f44977a87be1353d69, type: 2}
+    hole: {fileID: 11400000, guid: a5f0fb63963a77b4991a8b89f70d8499, type: 2}
+  - bush: {fileID: 11400000, guid: 6ca745d0464e5b34cb6b92530888d02c, type: 2}
+    hole: {fileID: 11400000, guid: d447c07aa85224447a57b515dc3d22dd, type: 2}
+  - bush: {fileID: 11400000, guid: dbf5bd862b696844594925d86fda2c1d, type: 2}
+    hole: {fileID: 11400000, guid: c2e93cac793343b41b9dcd916a53fe85, type: 2}
+  colliderSize: 0.9
+  spawnClearance: 0.9
+  breakSound: {fileID: 8300000, guid: 8708fee05b6068843a242723cc2039b4, type: 3}
+  breakVolume: 0.4

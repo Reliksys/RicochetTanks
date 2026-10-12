@@ -3,7 +3,8 @@ using UnityEngine;
 
 // Сетка проходимости арены для поиска пути ботов (BFS по 8 соседям).
 // Строится один раз на карту (GameBootstrap.CurrentMap) при первом обращении.
-// Препятствие = не-триггер коллайдер без IDamageable в родителях (танки препятствием не считаются).
+// Препятствие = не-триггер коллайдер без IDamageable в родителях (танки препятствием не считаются)
+// или куст (Bush): он IDamageable, но стоит на месте, пока его не сломают.
 public static class ArenaGrid
 {
     public const float CellSize = 0.5f;
@@ -25,6 +26,23 @@ public static class ArenaGrid
     }
 
     public static int CellCount => built ? walkable.Length : 0;
+
+    // Перестроить сетку при следующем обращении (например, после создания кустов)
+    public static void Invalidate() => built = false;
+
+    // Пересчитать проходимость клеток в области (сломали куст)
+    public static void RefreshArea(Bounds area)
+    {
+        if (!built || builtFor != GameBootstrap.CurrentMap) return;
+        area.Expand(ClearanceSize);
+        int x0 = Mathf.Max(0, Mathf.FloorToInt((area.min.x - origin.x) / CellSize));
+        int y0 = Mathf.Max(0, Mathf.FloorToInt((area.min.y - origin.y) / CellSize));
+        int x1 = Mathf.Min(width - 1, Mathf.CeilToInt((area.max.x - origin.x) / CellSize));
+        int y1 = Mathf.Min(height - 1, Mathf.CeilToInt((area.max.y - origin.y) / CellSize));
+        for (int y = y0; y <= y1; y++)
+            for (int x = x0; x <= x1; x++)
+                walkable[y * width + x] = CellFree(y * width + x);
+    }
 
     // Сетка готова (строит при первом вызове или при смене карты)
     public static bool Ready
@@ -62,13 +80,13 @@ public static class ArenaGrid
         origin = (Vector2)bounds.min + Vector2.one * (CellSize * 0.5f);
         walkable = new bool[width * height];
 
-        Vector2 box = Vector2.one * ClearanceSize;
-        for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-                walkable[y * width + x] = !HasWall(Physics2D.OverlapBoxAll(Center(y * width + x), box, 0f));
+        for (int i = 0; i < walkable.Length; i++) walkable[i] = CellFree(i);
 
         built = true;
     }
+
+    static bool CellFree(int cell) =>
+        !HasWall(Physics2D.OverlapBoxAll(Center(cell), Vector2.one * ClearanceSize, 0f));
 
     static bool HasWall(Collider2D[] hits)
     {
@@ -77,7 +95,8 @@ public static class ArenaGrid
         return false;
     }
 
-    public static bool IsWall(Collider2D c) => c != null && !c.isTrigger && c.GetComponentInParent<IDamageable>() == null;
+    public static bool IsWall(Collider2D c) =>
+        c != null && !c.isTrigger && (c.GetComponentInParent<IDamageable>() == null || c.GetComponent<Bush>() != null);
 
     public static bool Walkable(int cell) => cell >= 0 && cell < walkable.Length && walkable[cell];
 
