@@ -64,7 +64,7 @@ public class GameBootstrap : MonoBehaviour
     void PlacePlayer(GameObject mapRoot)
     {
         if (mapRoot == null) return;
-        PlayerTank player = FindFirstObjectByType<PlayerTank>();
+        PlayerTank player = FindAnyObjectByType<PlayerTank>();
         Transform spawn = FindDeep(mapRoot.transform, "PlayerSpawn");
         if (player == null || spawn == null) return;
 

@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 5350683042770850871}
   - component: {fileID: 4054931749077675755}
   - component: {fileID: 6716506405707371712}
+  - component: {fileID: -3655511012470368309}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -309,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 1
   destroyOnDeath: 1
+  invulnerableAfterHit: 0
 --- !u!114 &6716506405707371712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +328,31 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6529417764999085516, guid: d5974101734c19a44b784cecea782213, type: 3}
   fireCooldown: 0.3
   maxActiveBullets: 5
-  turretTurnSpeed: 0
+  turretTurnSpeed: 150
+--- !u!114 &-3655511012470368309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2950617264677249355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74040848dcc9bd7a2a3415c70381d11b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  stationary: 0
+  body: {fileID: 4564649098395866068}
+  reactionTime: 0.35
+  aimErrorDeg: 3
+  fireAngleTolerance: 4
+  fireIntervalMin: 1
+  fireIntervalMax: 1.6
+  firstShotDelay: 1
+  maxLeadTime: 1.5
+  maxPathLength: 40
+  moveSpeed: 2.5
+  bodyTurnSpeed: 540
 --- !u!1 &6016455551716757191
 GameObject:
   m_ObjectHideFlags: 0
