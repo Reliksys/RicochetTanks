@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: "\u0410\u0434\u0440\u0435\u043d\u0430\u043b\u0438\u043d"
   description: "\u0412\u0440\u0430\u0433\u0438 \u0435\u0437\u0434\u044f\u0442 \u0438 \u0441\u0442\u0440\u0435\u043b\u044f\u044e\u0442 \u043d\u0430 30% \u0431\u044b\u0441\u0442\u0440\u0435\u0435."
-  icon: {fileID: 0}
+  icon: {fileID: -6875992168243222803, guid: 0c79b7858fe43fc4380c743e0266a2fc, type: 3}
   scoreMultiplier: 1.3
   allowInQuickPlay: 1
   group: 

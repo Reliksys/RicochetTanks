@@ -89,5 +89,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   scoreManager: {fileID: 0}
   waveManager: {fileID: 0}
-  showTempHud: 1
-  showTempGameOver: 1
+  showTempHud: 0
+  showTempGameOver: 0

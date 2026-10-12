@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // "Сочность" боя: звуки, тряска камеры и эффекты частиц на события игры.
-// Вешается на объект GameManager в сцене Game. Ничего не знает о врагах/волнах — слушает глобальные события.
+// Вешается на объект GameManager (лида) в сцене Game. Слушает глобальные события боя, волн и конца игры.
 // Эффекты (префабы частиц от художника) просто перетащить в поля — код их сам создаст и удалит.
 public class GameFeel : MonoBehaviour
 {
@@ -74,6 +74,8 @@ public class GameFeel : MonoBehaviour
         Bullet.AnyBounced += OnBounced;
         Health.AnyDamaged += OnDamaged;
         Health.AnyDied += OnDied;
+        WaveManager.WaveStarted += OnWaveStarted;
+        GameManager.GameOver += OnGameOver;
     }
 
     void OnDisable()
@@ -82,6 +84,8 @@ public class GameFeel : MonoBehaviour
         Bullet.AnyBounced -= OnBounced;
         Health.AnyDamaged -= OnDamaged;
         Health.AnyDied -= OnDied;
+        WaveManager.WaveStarted -= OnWaveStarted;
+        GameManager.GameOver -= OnGameOver;
         if (Instance == this) Instance = null;
     }
 
@@ -102,6 +106,9 @@ public class GameFeel : MonoBehaviour
     }
 
     // ---------- Реакции на события ----------
+    void OnWaveStarted(int wave) => PlayWaveStart();
+    void OnGameOver(int finalScore, int best, bool newRecord) => PlayGameOver();
+
     void OnFired(TankGun gun, Bullet bullet)
     {
         bool isPlayer = gun.GetComponent<PlayerTank>() != null;
