@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
+        if (GameFeel.Instance != null) GameFeel.Instance.PlayGameOver();
         Debug.Log($"[Game] Конец боя: {raw} × {GameRules.ScoreMultiplier:0.##} = {FinalScore} (рекорд {best}{(NewRecord ? ", новый!" : "")})");
         GameOver?.Invoke(FinalScore, best, NewRecord);
     }

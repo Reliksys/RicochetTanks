@@ -39,6 +39,19 @@ public class EnemyAI : MonoBehaviour
     [Header("Движение (не для турели)")]
     [SerializeField] float moveSpeed = 2.5f;         // × GameRules.EnemySpeedMultiplier
     [SerializeField] float bodyTurnSpeed = 540f;
+    [Tooltip("Желаемая дистанция до игрока")]
+    [SerializeField] float preferredRangeMin = 4f;
+    [SerializeField] float preferredRangeMax = 8f;
+    [Tooltip("Сколько стоять на позиции, с")]
+    [SerializeField] float holdTimeMin = 0.8f;
+    [SerializeField] float holdTimeMax = 2f;
+    [Tooltip("Вероятность после выстрела отъехать в укрытие")]
+    [Range(0f, 1f)]
+    [SerializeField] float retreatChance = 0.5f;
+    [Tooltip("Как часто проверять, не убежал ли игрок от выбранной позиции, с")]
+    [SerializeField] float repathInterval = 0.7f;
+    [Tooltip("Сколько случайных клеток оценивать при выборе позиции")]
+    [SerializeField] int candidateSamples = 40;
 
     // Все живые враги (для WaveManager и проверки союзников)
     public static readonly List<EnemyAI> All = new List<EnemyAI>();
@@ -47,6 +60,8 @@ public class EnemyAI : MonoBehaviour
     static void ResetStatics() => All.Clear();
 
     public bool Stationary => stationary;
+    // Куда бот едет (или где стоит) — чтобы союзники не лезли в одну точку
+    public Vector2 Destination => moving ? destination : (Vector2)transform.position;
 
     enum ShotMode { None, Direct, Ricochet }
 
@@ -60,7 +75,23 @@ public class EnemyAI : MonoBehaviour
     float fireTimer;            // до следующего разрешённого выстрела
     float aimReadyTimer;        // сколько линия огня уже держится
     float aimErrorCurrent;      // разброс прямого выстрела на текущий выстрел
-    Vector2 moveDir;            // куда едем (пока всегда ноль: движение — следующий шаг)
+    Vector2 moveDir;            // куда едем сейчас (нормализовано или ноль)
+
+    // Движение: едем по path к выбранной позиции, потом стоим holdTimer
+    readonly List<Vector2> path = new List<Vector2>();
+    readonly List<int> reachedCells = new List<int>();
+    int[] bfsDist, bfsParent;
+    int pathIndex;
+    bool moving;
+    bool seekCover;             // сейчас ищем укрытие (после выстрела)
+    float holdTimer;
+    float repathTimer;
+    float stuckTimer;
+    Vector2 destination;
+    Vector2 playerPosAtChoose;
+    Vector2 lastPos;
+    const float ArriveDistance = 0.15f;
+    const float PathRadius = 0.38f;   // радиус танка для сглаживания пути
 
     ShotMode mode;              // какой выстрел сейчас готовим
     Vector2 desiredDir;         // куда хотим навести ствол
@@ -103,6 +134,8 @@ public class EnemyAI : MonoBehaviour
         sampleLengths = new float[ricochetSamples];
 
         fireTimer = firstShotDelay;
+        holdTimer = Random.Range(0.2f, 0.6f); // первая позиция — почти сразу
+        lastPos = transform.position;
         RollAim();
     }
 
@@ -137,6 +170,7 @@ public class EnemyAI : MonoBehaviour
         aimReadyTimer = mode != ShotMode.None ? aimReadyTimer + dt : 0f;
         TryShoot();
 
+        if (!stationary) UpdateMovement(dt);
         RotateBody(dt);
     }
 
@@ -318,6 +352,149 @@ public class EnemyAI : MonoBehaviour
         fireTimer = Random.Range(fireIntervalMin, fireIntervalMax) / rate;
         aimReadyTimer = 0f;
         RollAim();
+
+        // Выстрелил — иногда отъезжаем в укрытие
+        if (!stationary && Random.value < retreatChance && ArenaGrid.Ready)
+        {
+            seekCover = true;
+            ChooseDestination();
+        }
+    }
+
+    // ---------- Движение ----------
+
+    void UpdateMovement(float dt)
+    {
+        if (!ArenaGrid.Ready)
+        {
+            moveDir = Vector2.zero;
+            return;
+        }
+
+        Vector2 pos = transform.position;
+
+        if (moving)
+        {
+            while (pathIndex < path.Count && Vector2.Distance(pos, path[pathIndex]) < ArriveDistance) pathIndex++;
+
+            if (pathIndex >= path.Count)
+            {
+                // Приехали — стоим (в укрытии недолго)
+                moving = false;
+                moveDir = Vector2.zero;
+                holdTimer = seekCover ? Random.Range(0.5f, 1.2f) : Random.Range(holdTimeMin, holdTimeMax);
+            }
+            else
+            {
+                moveDir = (path[pathIndex] - pos).normalized;
+
+                // Игрок сильно сместился — выбираем позицию заново
+                repathTimer -= dt;
+                if (repathTimer <= 0f)
+                {
+                    repathTimer = repathInterval;
+                    if (!seekCover && Vector2.Distance(player.transform.position, playerPosAtChoose) > 2.5f)
+                        ChooseDestination();
+                }
+
+                // Застряли (упёрлись в танк или угол) — выбираем заново
+                if (dt > 0f)
+                {
+                    float expected = moveSpeed * GameRules.EnemySpeedMultiplier * dt;
+                    stuckTimer = Vector2.Distance(pos, lastPos) < expected * 0.2f ? stuckTimer + dt : 0f;
+                    if (stuckTimer > 0.6f)
+                    {
+                        stuckTimer = 0f;
+                        ChooseDestination();
+                    }
+                }
+            }
+        }
+        else
+        {
+            moveDir = Vector2.zero;
+            // Без линии огня стоять незачем — время на позиции идёт вдвое быстрее
+            holdTimer -= mode == ShotMode.None ? dt * 2f : dt;
+            if (holdTimer <= 0f)
+            {
+                seekCover = false;
+                ChooseDestination();
+            }
+        }
+
+        lastPos = pos;
+    }
+
+    // Выбор позиции: оцениваем случайные достижимые клетки и едем в лучшую
+    void ChooseDestination()
+    {
+        Vector2 self = transform.position;
+        int start = ArenaGrid.CellOf(self);
+        if (start < 0)
+        {
+            moving = false;
+            holdTimer = 1f;
+            return;
+        }
+
+        int n = ArenaGrid.CellCount;
+        if (bfsDist == null || bfsDist.Length != n)
+        {
+            bfsDist = new int[n];
+            bfsParent = new int[n];
+        }
+        ArenaGrid.Bfs(start, bfsDist, bfsParent, reachedCells);
+
+        Vector2 playerPos = player.transform.position;
+        int best = start;
+        float bestScore = ScoreCell(start, 0, playerPos);
+        for (int i = 0; i < candidateSamples && reachedCells.Count > 0; i++)
+        {
+            int cell = reachedCells[Random.Range(0, reachedCells.Count)];
+            float s = ScoreCell(cell, bfsDist[cell], playerPos);
+            if (s > bestScore) { bestScore = s; best = cell; }
+        }
+
+        playerPosAtChoose = playerPos;
+        repathTimer = repathInterval;
+        stuckTimer = 0f;
+
+        if (best == start)
+        {
+            // Лучше остаться на месте
+            moving = false;
+            holdTimer = Random.Range(holdTimeMin, holdTimeMax);
+            return;
+        }
+
+        ArenaGrid.BuildPath(best, bfsParent, self, PathRadius, path);
+        pathIndex = 0;
+        destination = ArenaGrid.Center(best);
+        moving = true;
+    }
+
+    float ScoreCell(int cell, int steps, Vector2 playerPos)
+    {
+        Vector2 c = ArenaGrid.Center(cell);
+        float d = Vector2.Distance(c, playerPos);
+        float s = 0f;
+
+        // Дистанция до игрока
+        if (d < preferredRangeMin) s -= (preferredRangeMin - d) * 3f;
+        else if (d > preferredRangeMax) s -= d - preferredRangeMax;
+
+        // Линия огня: в атаке нужна, в укрытии — наоборот
+        bool los = HasDirectLine(c, playerPos);
+        s += seekCover ? (los ? -6f : 4f) : (los ? 6f : 0f);
+
+        // Далеко ехать — хуже (в укрытие — тем более)
+        s -= steps * ArenaGrid.CellSize * (seekCover ? 0.8f : 0.3f);
+
+        // Не лезть в одну точку с союзниками
+        foreach (EnemyAI e in All)
+            if (e != this && (e.Destination - c).sqrMagnitude < 4f) s -= 3f;
+
+        return s + Random.value * 1.5f; // немного случайности, чтобы боты не были одинаковыми
     }
 
     // Новый разброс на следующий выстрел
@@ -405,6 +582,19 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = Color.red;
         for (int i = 1; i < debugPath.Count; i++)
             Gizmos.DrawLine(debugPath[i - 1], debugPath[i]);
+
+        // Путь движения: голубой — в атаку, синий — в укрытие
+        if (moving)
+        {
+            Gizmos.color = seekCover ? Color.blue : Color.cyan;
+            Vector3 prev = transform.position;
+            for (int i = pathIndex; i < path.Count; i++)
+            {
+                Gizmos.DrawLine(prev, path[i]);
+                prev = path[i];
+            }
+            Gizmos.DrawWireSphere(destination, 0.25f);
+        }
 
         // Куда хотим навести ствол: зелёный — прямой, жёлтый — рикошет, серый — нет выстрела
         Gizmos.color = mode == ShotMode.Direct ? Color.green : mode == ShotMode.Ricochet ? Color.yellow : Color.gray;

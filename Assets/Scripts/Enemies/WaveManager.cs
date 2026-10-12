@@ -142,6 +142,7 @@ public class WaveManager : MonoBehaviour
 
         state = State.Spawning;
         timer = 0f;
+        if (GameFeel.Instance != null) GameFeel.Instance.PlayWaveStart();
         WaveStarted?.Invoke(CurrentWave);
     }
 
