@@ -13,9 +13,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] int damage = 1;
     [SerializeField] float lifetime = 10f;
     [SerializeField] LayerMask hitMask = ~0; // по умолчанию сталкиваемся со всем
+    [Tooltip("Никогда не рикошетит, даже с «Резиновыми снарядами» (лазер врагов)")]
+    [SerializeField] bool noRicochet = false;
 
     public float Radius => radius;
-    public int MaxBounces => maxBounces + GameRules.ExtraBounces;
+    public int MaxBounces => noRicochet ? 0 : maxBounces + GameRules.ExtraBounces;
+    public int Damage => damage;
     public LayerMask HitMask => hitMask;
     public GameObject Owner { get; private set; }
     public Vector2 Direction => direction;                            // текущее направление полёта

@@ -17,3 +17,4 @@ MonoBehaviour:
   modifiers:
   - {fileID: 11400000, guid: 5f38491358904f84854799c3b0073076, type: 2}
   - {fileID: 11400000, guid: 83cd5c80b80f4fb3818b2596e58ac0cf, type: 2}
+  enemyTier: 1

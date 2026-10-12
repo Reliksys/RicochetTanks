@@ -8,6 +8,7 @@ public static class RunConfig
     public static MapData Map;
     public static readonly List<ModifierData> Modifiers = new List<ModifierData>();
     public static string ModeName = "";
+    public static int EnemyTier;   // уровень врагов из пресета; 0 = считать по множителю очков
     public static bool IsSet { get; private set; }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -16,6 +17,7 @@ public static class RunConfig
         Map = null;
         Modifiers.Clear();
         ModeName = "";
+        EnemyTier = 0;
         IsSet = false;
     }
 
@@ -27,6 +29,7 @@ public static class RunConfig
             foreach (ModifierData m in modifiers)
                 if (m != null) Modifiers.Add(m);
         ModeName = modeName;
+        EnemyTier = 0;
         IsSet = true;
     }
 
@@ -40,6 +43,7 @@ public static class RunConfig
     public static void SetPreset(GameDatabase db, MapData map, DifficultyPreset preset)
     {
         Set(map, preset != null ? preset.modifiers : null, preset != null ? preset.displayName : "Свой набор");
+        EnemyTier = preset != null ? preset.enemyTier : 0;
     }
 
     // Если игру запустили сразу со сцены Game (без меню) — берём значения по умолчанию.

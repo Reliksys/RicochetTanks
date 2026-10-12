@@ -46,12 +46,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01adc88830490eb65bff61147c74c4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  tankPrefab: {fileID: -3655511012470368309, guid: 9e44c3baa92991f478503d9ae53cd991, type: 3}
-  turretPrefab: {fileID: 2617277094492441269, guid: f8f2c59001d25b0feaa64826d9c5bea1, type: 3}
+  enemyTypes:
+  - prefab: {fileID: -3655511012470368309, guid: 9e44c3baa92991f478503d9ae53cd991, type: 3}
+    minTier: 0
+    fromWave: 1
+    weight: 4
+  - prefab: {fileID: 2617277094492441269, guid: f8f2c59001d25b0feaa64826d9c5bea1, type: 3}
+    minTier: 0
+    fromWave: 1
+    weight: 2
+  - prefab: {fileID: 5486780223572779828, guid: 261b52c8b30c0de7183b46b7536810d0, type: 3}
+    minTier: 2
+    fromWave: 2
+    weight: 2
+  - prefab: {fileID: 4123562478143773966, guid: 9677405710cc4d45688835121a974df8, type: 3}
+    minTier: 3
+    fromWave: 2
+    weight: 1.5
+  easyBelowMultiplier: 0.95
+  hardAboveMultiplier: 1.5
   startCount: 2
   perWave: 1
   maxPerWave: 10
-  turretShare: 0.3
   toughFromWave: 4
   toughHealth: 2
   firstWaveDelay: 1

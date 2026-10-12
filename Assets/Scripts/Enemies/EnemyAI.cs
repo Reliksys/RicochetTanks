@@ -124,6 +124,9 @@ public class EnemyAI : MonoBehaviour
     int[] sampleBounces;
     float[] sampleLengths;
 
+    MultiBarrel multiBarrel;    // двухствольный танк (или null)
+    readonly List<Vector2> barrelOffsets = new List<Vector2>();
+
     readonly List<Vector3> debugPath = new List<Vector3>();      // проверка перед выстрелом
     readonly List<Vector3> ricochetPath = new List<Vector3>();   // найденный рикошет
 
@@ -132,6 +135,7 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         gun = GetComponent<TankGun>();
         bulletPrefab = gun.BulletPrefab;
+        multiBarrel = GetComponent<MultiBarrel>();
 
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
@@ -297,7 +301,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         // 3) Рикошетом (по текущей позиции игрока)
-        if (useRicochet)
+        if (useRicochet && bulletPrefab.MaxBounces > 0) // лазер не рикошетит — не ищем
         {
             ricochetTimer -= dt;
             if (ricochetTimer <= 0f)
@@ -432,12 +436,7 @@ public class EnemyAI : MonoBehaviour
         if (Vector2.Angle(gun.AimDirection, desiredDir) > fireAngleTolerance) return;
 
         // Проверяем реальное направление ствола: не попадём ли в себя или в союзника
-        IDamageable first = SimulateShot(gun.AimDirection, out _, out _, debugPath);
-        if (mode == ShotMode.Ricochet)
-        {
-            if (!IsPlayer(first)) return; // рикошет — только если точно долетит до игрока
-        }
-        else if (first != null && !IsPlayer(first)) return;
+        if (!ShotIsSafe(gun.AimDirection)) return;
 
         if (!gun.TryFire()) return;
 
@@ -591,6 +590,24 @@ public class EnemyAI : MonoBehaviour
         return s + Random.value * 1.5f; // немного случайности, чтобы боты не были одинаковыми
     }
 
+    // Симуляция по каждому стволу: ни один снаряд не летит в себя/союзника,
+    // для рикошета хотя бы один точно долетает до игрока
+    bool ShotIsSafe(Vector2 dir)
+    {
+        barrelOffsets.Clear();
+        if (multiBarrel != null) multiBarrel.GetBarrelOffsets(dir, barrelOffsets);
+        else barrelOffsets.Add(Vector2.zero);
+
+        bool hitsPlayer = false;
+        for (int i = 0; i < barrelOffsets.Count; i++)
+        {
+            IDamageable first = SimulateShot(dir, out _, out _, i == 0 ? debugPath : null, barrelOffsets[i]);
+            if (first != null && !IsPlayer(first)) return false;
+            if (first != null) hitsPlayer = true;
+        }
+        return mode != ShotMode.Ricochet || hitsPlayer;
+    }
+
     // Новый разброс на следующий выстрел
     void RollAim()
     {
@@ -601,9 +618,11 @@ public class EnemyAI : MonoBehaviour
     // Точная копия логики полёта Bullet: снаряд из центра танка, свой танк игнорируется
     // до первого отскока (после — только если включён Бумеранг).
     // Возвращает первую цель на пути (или null), длину пути и число отскоков до неё.
-    public IDamageable SimulateShot(Vector2 dir, out float pathLength, out int bounceCount, List<Vector3> points = null)
+    // originOffset — смещение ствола от центра (у многоствольных).
+    public IDamageable SimulateShot(Vector2 dir, out float pathLength, out int bounceCount, List<Vector3> points = null,
+                                    Vector2 originOffset = default)
     {
-        Vector2 pos = transform.position;
+        Vector2 pos = (Vector2)transform.position + originOffset;
         dir = dir.normalized;
         float left = maxPathLength;
         int maxBounces = bulletPrefab.MaxBounces;

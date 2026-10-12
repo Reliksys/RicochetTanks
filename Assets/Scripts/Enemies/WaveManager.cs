@@ -2,22 +2,36 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Волны врагов. Волна N: (startCount + (N-1)·perWave) × EnemyCountMultiplier врагов, часть — турели.
+// Волны врагов. Волна N: (startCount + (N-1)·perWave) × EnemyCountMultiplier врагов.
+// Тип каждого врага — случайный (по весам) из доступных на текущем уровне сложности и номере волны.
 // Волна зачищена → WaveCleared(N) → пауза → WaveStarted(N+1). Волны бесконечные.
 // Точки спавна: дети объекта EnemySpawns на карте (ищем в Start: карту создаёт GameBootstrap в Awake).
 // Суперхот: пауза и интервал спавна тикают Time.deltaTime * GameRules.BulletTimeScale.
 public class WaveManager : MonoBehaviour
 {
-    [Header("Префабы")]
-    [SerializeField] EnemyAI tankPrefab;
-    [SerializeField] EnemyAI turretPrefab;
+    [Serializable]
+    public class EnemyType
+    {
+        public EnemyAI prefab;
+        [Tooltip("С какого уровня сложности доступен: 1 — лёгкий, 2 — обычный, 3 — сложный")]
+        [Range(1, 3)] public int minTier = 1;
+        [Tooltip("С какой волны появляется")]
+        public int fromWave = 1;
+        [Tooltip("Вес при случайном выборе (больше — чаще)")]
+        public float weight = 1f;
+    }
+
+    [Header("Типы врагов")]
+    [SerializeField] List<EnemyType> enemyTypes = new List<EnemyType>();
+
+    [Header("Уровень без пресета (по множителю очков)")]
+    [SerializeField] float easyBelowMultiplier = 0.95f;  // множитель меньше — лёгкий
+    [SerializeField] float hardAboveMultiplier = 1.5f;   // множитель больше — сложный
 
     [Header("Размер волны")]
     [SerializeField] int startCount = 2;             // врагов в первой волне
     [SerializeField] int perWave = 1;                // прибавка за волну
     [SerializeField] int maxPerWave = 10;
-    [Range(0f, 1f)]
-    [SerializeField] float turretShare = 0.3f;       // доля турелей
 
     [Header("Здоровье врагов")]
     [SerializeField] int toughFromWave = 4;          // с этой волны у врагов больше HP
@@ -44,6 +58,8 @@ public class WaveManager : MonoBehaviour
     }
 
     public int CurrentWave { get; private set; }
+    // Уровень врагов: 1 — лёгкий, 2 — обычный, 3 — сложный
+    public int Tier { get; private set; }
     public int AliveCount => alive.Count;
     public int LeftToSpawn => queue.Count;
     // Сколько осталось до следующей волны (для надписи «Волна N через…»), 0 если идёт бой
@@ -71,12 +87,20 @@ public class WaveManager : MonoBehaviour
             state = State.Stopped;
             return;
         }
-        if (tankPrefab == null && turretPrefab == null)
+        enemyTypes.RemoveAll(t => t == null || t.prefab == null);
+        if (enemyTypes.Count == 0)
         {
-            Debug.LogWarning("[WaveManager] Не назначены префабы врагов.");
+            Debug.LogWarning("[WaveManager] Не назначены типы врагов (Enemy Types).");
             state = State.Stopped;
             return;
         }
+
+        // Уровень: из пресета, а без пресета («Быстрая игра», свой набор) — по множителю очков
+        if (RunConfig.EnemyTier > 0) Tier = Mathf.Clamp(RunConfig.EnemyTier, 1, 3);
+        else if (GameRules.ScoreMultiplier < easyBelowMultiplier) Tier = 1;
+        else if (GameRules.ScoreMultiplier > hardAboveMultiplier) Tier = 3;
+        else Tier = 2;
+        Debug.Log($"[WaveManager] Уровень врагов: {Tier}");
 
         state = State.Pause;
         timer = firstWaveDelay;
@@ -126,25 +150,39 @@ public class WaveManager : MonoBehaviour
 
         int count = Mathf.RoundToInt((startCount + (CurrentWave - 1) * perWave) * GameRules.EnemyCountMultiplier);
         count = Mathf.Clamp(count, 1, maxPerWave);
-        int turrets = turretPrefab != null ? Mathf.RoundToInt(count * turretShare) : 0;
-        if (tankPrefab == null) turrets = count;
-
-        // Перемешиваем порядок, чтобы турели не шли всегда последними
-        var list = new List<EnemyAI>(count);
-        for (int i = 0; i < count; i++) list.Add(i < turrets ? turretPrefab : tankPrefab);
-        for (int i = list.Count - 1; i > 0; i--)
-        {
-            int j = UnityEngine.Random.Range(0, i + 1);
-            (list[i], list[j]) = (list[j], list[i]);
-        }
         queue.Clear();
-        foreach (EnemyAI e in list) queue.Enqueue(e);
+        for (int i = 0; i < count; i++) queue.Enqueue(PickType());
 
         state = State.Spawning;
         timer = 0f;
         if (GameFeel.Instance != null) GameFeel.Instance.PlayWaveStart();
         WaveStarted?.Invoke(CurrentWave);
     }
+
+    // Случайный тип по весам среди доступных на этом уровне и волне
+    EnemyAI PickType()
+    {
+        float total = 0f;
+        foreach (EnemyType t in enemyTypes)
+            if (Allowed(t)) total += t.weight;
+
+        if (total <= 0f)
+        {
+            Debug.LogWarning($"[WaveManager] Нет типов врагов для уровня {Tier}, волны {CurrentWave} — беру первый.");
+            return enemyTypes[0].prefab;
+        }
+
+        float r = UnityEngine.Random.value * total;
+        foreach (EnemyType t in enemyTypes)
+        {
+            if (!Allowed(t)) continue;
+            r -= t.weight;
+            if (r <= 0f) return t.prefab;
+        }
+        return enemyTypes[0].prefab;
+    }
+
+    bool Allowed(EnemyType t) => t.weight > 0f && t.minTier <= Tier && t.fromWave <= CurrentWave;
 
     // false — все точки заняты, попробуем в следующем кадре
     bool TrySpawnNext()
