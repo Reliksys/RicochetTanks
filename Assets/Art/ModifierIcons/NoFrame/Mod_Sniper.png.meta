@@ -1,0 +1,613 @@
+fileFormatVersion: 2
+guid: 8bcd980bc1434d542b93d9c3fe4bfa3e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2729320632248532143
+    second: Mod_Sniper_0
+  - first:
+      213: 981347346133188159
+    second: Mod_Sniper_1
+  - first:
+      213: 1713329769477899898
+    second: Mod_Sniper_2
+  - first:
+      213: 6222822526168352772
+    second: Mod_Sniper_3
+  - first:
+      213: -7030087438786731696
+    second: Mod_Sniper_4
+  - first:
+      213: 6293060008708806879
+    second: Mod_Sniper_5
+  - first:
+      213: 643806437209098116
+    second: Mod_Sniper_6
+  - first:
+      213: 65423457388879097
+    second: Mod_Sniper_7
+  - first:
+      213: -5562754226802394075
+    second: Mod_Sniper_8
+  - first:
+      213: 3122746402982229422
+    second: Mod_Sniper_9
+  - first:
+      213: 58003393416036552
+    second: Mod_Sniper_10
+  - first:
+      213: -1884614843196088003
+    second: Mod_Sniper_11
+  - first:
+      213: -4217776939096663277
+    second: Mod_Sniper_12
+  - first:
+      213: -7411422523120417669
+    second: Mod_Sniper_13
+  - first:
+      213: 7002022891505745771
+    second: Mod_Sniper_14
+  - first:
+      213: 664675326486383842
+    second: Mod_Sniper_15
+  - first:
+      213: -5576213789535855503
+    second: Mod_Sniper_16
+  - first:
+      213: -7689554768778581155
+    second: Mod_Sniper_17
+  - first:
+      213: 3538785798783334548
+    second: Mod_Sniper_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Mod_Sniper_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 0
+        width: 146
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1538ea478518f1ad0800000000000000
+      internalID: -2729320632248532143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_1
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 197
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3e7a8f36327e9d00800000000000000
+      internalID: 981347346133188159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_2
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 223
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7605d40958f6c710800000000000000
+      internalID: 1713329769477899898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_3
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 219
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 408409c1e18eb5650800000000000000
+      internalID: 6222822526168352772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_4
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 211
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0516e2fa8bc107e90800000000000000
+      internalID: -7030087438786731696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_5
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 9
+        width: 28
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd81e416cb0755750800000000000000
+      internalID: 6293060008708806879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_6
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 201
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48745f92b824fe800800000000000000
+      internalID: 643806437209098116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_7
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 205
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fc54a1b94e68e000800000000000000
+      internalID: 65423457388879097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_8
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 207
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52cf3a2e0802dc2b0800000000000000
+      internalID: -5562754226802394075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_9
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 135
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea57269fe49365b20800000000000000
+      internalID: 3122746402982229422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_10
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 133
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c0845c67c11ec000800000000000000
+      internalID: 58003393416036552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_11
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 129
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d316ed409c088d5e0800000000000000
+      internalID: -1884614843196088003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_12
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 127
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31b1f4b78327775c0800000000000000
+      internalID: -4217776939096663277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_13
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 111
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b74041d8b76552990800000000000000
+      internalID: -7411422523120417669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_14
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 117
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6f7a55b8be2c2160800000000000000
+      internalID: 7002022891505745771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_15
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 101
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec003610b6693900800000000000000
+      internalID: 664675326486383842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_16
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 107
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17c941b3a1f4d92b0800000000000000
+      internalID: -5576213789535855503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_17
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 91
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5baa06cda6394590800000000000000
+      internalID: -7689554768778581155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_Sniper_18
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 97
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4987da84fea4c1130800000000000000
+      internalID: 3538785798783334548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Mod_Sniper_0: -2729320632248532143
+      Mod_Sniper_1: 981347346133188159
+      Mod_Sniper_10: 58003393416036552
+      Mod_Sniper_11: -1884614843196088003
+      Mod_Sniper_12: -4217776939096663277
+      Mod_Sniper_13: -7411422523120417669
+      Mod_Sniper_14: 7002022891505745771
+      Mod_Sniper_15: 664675326486383842
+      Mod_Sniper_16: -5576213789535855503
+      Mod_Sniper_17: -7689554768778581155
+      Mod_Sniper_18: 3538785798783334548
+      Mod_Sniper_2: 1713329769477899898
+      Mod_Sniper_3: 6222822526168352772
+      Mod_Sniper_4: -7030087438786731696
+      Mod_Sniper_5: 6293060008708806879
+      Mod_Sniper_6: 643806437209098116
+      Mod_Sniper_7: 65423457388879097
+      Mod_Sniper_8: -5562754226802394075
+      Mod_Sniper_9: 3122746402982229422
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,1627 @@
+fileFormatVersion: 2
+guid: 233618136e7f21741aeda1241a45feab
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3169814718765891925
+    second: Mod_OneShell_0
+  - first:
+      213: -8894659979782313477
+    second: Mod_OneShell_1
+  - first:
+      213: -8497899974675596487
+    second: Mod_OneShell_2
+  - first:
+      213: 1150463208690329304
+    second: Mod_OneShell_3
+  - first:
+      213: -5888069234042111056
+    second: Mod_OneShell_4
+  - first:
+      213: -87955209084811967
+    second: Mod_OneShell_5
+  - first:
+      213: -5240874761425620669
+    second: Mod_OneShell_6
+  - first:
+      213: -4178742778332568151
+    second: Mod_OneShell_7
+  - first:
+      213: -4651306311221364225
+    second: Mod_OneShell_8
+  - first:
+      213: 6942020497531436938
+    second: Mod_OneShell_9
+  - first:
+      213: 5074627211940327339
+    second: Mod_OneShell_10
+  - first:
+      213: 1718339225161521450
+    second: Mod_OneShell_11
+  - first:
+      213: -5842952709466225148
+    second: Mod_OneShell_12
+  - first:
+      213: -3049448553282174619
+    second: Mod_OneShell_13
+  - first:
+      213: 232973716673445084
+    second: Mod_OneShell_14
+  - first:
+      213: 5037360880680730955
+    second: Mod_OneShell_15
+  - first:
+      213: -8059538450654926498
+    second: Mod_OneShell_16
+  - first:
+      213: -2134911235814249379
+    second: Mod_OneShell_17
+  - first:
+      213: 4935575874148905260
+    second: Mod_OneShell_18
+  - first:
+      213: 5899807349251530238
+    second: Mod_OneShell_19
+  - first:
+      213: 7583308601332066586
+    second: Mod_OneShell_20
+  - first:
+      213: -2880994945674102566
+    second: Mod_OneShell_21
+  - first:
+      213: -2224518852330003352
+    second: Mod_OneShell_22
+  - first:
+      213: 7808308620958895851
+    second: Mod_OneShell_23
+  - first:
+      213: -799380066544387375
+    second: Mod_OneShell_24
+  - first:
+      213: 1227279244141655706
+    second: Mod_OneShell_25
+  - first:
+      213: 2938703728341437712
+    second: Mod_OneShell_26
+  - first:
+      213: 7082601883868356829
+    second: Mod_OneShell_27
+  - first:
+      213: -8936652820963994257
+    second: Mod_OneShell_28
+  - first:
+      213: -6600229577638460427
+    second: Mod_OneShell_29
+  - first:
+      213: 4002009126713710773
+    second: Mod_OneShell_30
+  - first:
+      213: 8130138375564078817
+    second: Mod_OneShell_31
+  - first:
+      213: 477590676270745025
+    second: Mod_OneShell_32
+  - first:
+      213: 744229968119875990
+    second: Mod_OneShell_33
+  - first:
+      213: 1610155302108617482
+    second: Mod_OneShell_34
+  - first:
+      213: -8860975310209889291
+    second: Mod_OneShell_35
+  - first:
+      213: -6798297372303381473
+    second: Mod_OneShell_36
+  - first:
+      213: 2777419924269492639
+    second: Mod_OneShell_37
+  - first:
+      213: 54090448198830731
+    second: Mod_OneShell_38
+  - first:
+      213: 4600814592217324156
+    second: Mod_OneShell_39
+  - first:
+      213: -4135350827405743787
+    second: Mod_OneShell_40
+  - first:
+      213: -3149916350046377668
+    second: Mod_OneShell_41
+  - first:
+      213: -9019945420585244169
+    second: Mod_OneShell_42
+  - first:
+      213: 1464475675609554046
+    second: Mod_OneShell_43
+  - first:
+      213: -93432438027412039
+    second: Mod_OneShell_44
+  - first:
+      213: -7321617768971048228
+    second: Mod_OneShell_45
+  - first:
+      213: 1805957239995030885
+    second: Mod_OneShell_46
+  - first:
+      213: -2474707107439850843
+    second: Mod_OneShell_47
+  - first:
+      213: -4357011022236292131
+    second: Mod_OneShell_48
+  - first:
+      213: 1800463406466992875
+    second: Mod_OneShell_49
+  - first:
+      213: -811348072183065879
+    second: Mod_OneShell_50
+  - first:
+      213: 278211357243013714
+    second: Mod_OneShell_51
+  - first:
+      213: 4617304919833343448
+    second: Mod_OneShell_52
+  - first:
+      213: -4776658900500022693
+    second: Mod_OneShell_53
+  - first:
+      213: -6265897520044579201
+    second: Mod_OneShell_54
+  - first:
+      213: -1862337149031688995
+    second: Mod_OneShell_55
+  - first:
+      213: 2053210209638981557
+    second: Mod_OneShell_56
+  - first:
+      213: -7140492964786295034
+    second: Mod_OneShell_57
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Mod_OneShell_0
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 185
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55188db31b17dfb20800000000000000
+      internalID: 3169814718765891925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_1
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 61
+        width: 64
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf92133dfd1df8480800000000000000
+      internalID: -8894659979782313477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_2
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 185
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93bf8a03ff4611a80800000000000000
+      internalID: -8497899974675596487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_3
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 175
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d6a421613447ff00800000000000000
+      internalID: 1150463208690329304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_4
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 175
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bb730c5a30694ea0800000000000000
+      internalID: -5888069234042111056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_5
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 175
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 145ca5e043587cef0800000000000000
+      internalID: -87955209084811967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_6
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 175
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3417aecfb2ca447b0800000000000000
+      internalID: -5240874761425620669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_7
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 165
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a522c1459f1206c0800000000000000
+      internalID: -4178742778332568151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_8
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 165
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff93e1abd8d337fb0800000000000000
+      internalID: -4651306311221364225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_9
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 165
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8f77d2bcd2075060800000000000000
+      internalID: 6942020497531436938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_10
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 165
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bafeb3f0092bc6640800000000000000
+      internalID: 5074627211940327339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_11
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 155
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a295f5fcb64c8d710800000000000000
+      internalID: 1718339225161521450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_12
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 155
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4060cd0d779a9eea0800000000000000
+      internalID: -5842952709466225148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_13
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 155
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56189cc82be2ea5d0800000000000000
+      internalID: -3049448553282174619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_14
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 155
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdcb2586c50bb3300800000000000000
+      internalID: 232973716673445084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_15
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 145
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b418c6a280d48e540800000000000000
+      internalID: 5037360880680730955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_16
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 145
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e596c1bfa74c62090800000000000000
+      internalID: -8059538450654926498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_17
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 145
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5c2d42da854f52e0800000000000000
+      internalID: -2134911235814249379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_18
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 145
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2132a49b10be7440800000000000000
+      internalID: 4935575874148905260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_19
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 133
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efd506f868350e150800000000000000
+      internalID: 5899807349251530238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_20
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 133
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a19ef8caef25d3960800000000000000
+      internalID: 7583308601332066586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_21
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 133
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad8366f6c56a408d0800000000000000
+      internalID: -2880994945674102566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_22
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 133
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 864e5bac3ebe021e0800000000000000
+      internalID: -2224518852330003352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_23
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 123
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bee00e0125fac5c60800000000000000
+      internalID: 7808308620958895851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_24
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 123
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1daf715901808e4f0800000000000000
+      internalID: -799380066544387375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_25
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 123
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a96f54b58fb280110800000000000000
+      internalID: 1227279244141655706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_26
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 123
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01d48e3987f58c820800000000000000
+      internalID: 2938703728341437712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_27
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 111
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd06c7d53e47a4260800000000000000
+      internalID: 7082601883868356829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_28
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 111
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f65d2759b91aaf380800000000000000
+      internalID: -8936652820963994257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_29
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 111
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f345dc2b264764a0800000000000000
+      internalID: -6600229577638460427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_30
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 111
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b854a1e81ef98730800000000000000
+      internalID: 4002009126713710773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_31
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 101
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eea44af6cd04d070800000000000000
+      internalID: 8130138375564078817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_32
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 101
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c5082f803eb0a600800000000000000
+      internalID: 477590676270745025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_33
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 101
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6994cf08639045a00800000000000000
+      internalID: 744229968119875990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_34
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 101
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0b556f57bb685610800000000000000
+      internalID: 1610155302108617482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_35
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 89
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fbce6f17ed770580800000000000000
+      internalID: -8860975310209889291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_36
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 89
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1ca26e0f8897a1a0800000000000000
+      internalID: -6798297372303381473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_37
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 89
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f99ec2aa4b06b8620800000000000000
+      internalID: 2777419924269492639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_38
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 89
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8a02aed9fa20c000800000000000000
+      internalID: 54090448198830731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_39
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 79
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7a1c86de7069df30800000000000000
+      internalID: 4600814592217324156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_40
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 79
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 559ecde15584c96c0800000000000000
+      internalID: -4135350827405743787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_41
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 79
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c396a43c4cf3944d0800000000000000
+      internalID: -3149916350046377668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_42
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 79
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f9ea900e67b2d280800000000000000
+      internalID: -9019945420585244169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_43
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 67
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7c58ea2edcd25410800000000000000
+      internalID: 1464475675609554046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_44
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 67
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bd90e051bf04bef0800000000000000
+      internalID: -93432438027412039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_45
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 19
+        width: 36
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdaea434e63646a90800000000000000
+      internalID: -7321617768971048228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_46
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 67
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56dd2799a8c001910800000000000000
+      internalID: 1805957239995030885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_47
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 57
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5aac9e15ff218add0800000000000000
+      internalID: -2474707107439850843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_48
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 57
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddbe4294f89c883c0800000000000000
+      internalID: -4357011022236292131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_49
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 57
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bea0e8dcde78cf810800000000000000
+      internalID: 1800463406466992875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_50
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e294502a338db4f0800000000000000
+      internalID: -811348072183065879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_51
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25af2f061c76cd300800000000000000
+      internalID: 278211357243013714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_52
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d5745e6c56f31040800000000000000
+      internalID: 4617304919833343448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_53
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5afc7ea906e5bdb0800000000000000
+      internalID: -4776658900500022693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_54
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f76edb6576f0b09a0800000000000000
+      internalID: -6265897520044579201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_55
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd4d3f3ea36a726e0800000000000000
+      internalID: -1862337149031688995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_56
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bf9cbaaec77e7c10800000000000000
+      internalID: 2053210209638981557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mod_OneShell_57
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60facb00b7fd7ec90800000000000000
+      internalID: -7140492964786295034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Mod_OneShell_0: 3169814718765891925
+      Mod_OneShell_1: -8894659979782313477
+      Mod_OneShell_10: 5074627211940327339
+      Mod_OneShell_11: 1718339225161521450
+      Mod_OneShell_12: -5842952709466225148
+      Mod_OneShell_13: -3049448553282174619
+      Mod_OneShell_14: 232973716673445084
+      Mod_OneShell_15: 5037360880680730955
+      Mod_OneShell_16: -8059538450654926498
+      Mod_OneShell_17: -2134911235814249379
+      Mod_OneShell_18: 4935575874148905260
+      Mod_OneShell_19: 5899807349251530238
+      Mod_OneShell_2: -8497899974675596487
+      Mod_OneShell_20: 7583308601332066586
+      Mod_OneShell_21: -2880994945674102566
+      Mod_OneShell_22: -2224518852330003352
+      Mod_OneShell_23: 7808308620958895851
+      Mod_OneShell_24: -799380066544387375
+      Mod_OneShell_25: 1227279244141655706
+      Mod_OneShell_26: 2938703728341437712
+      Mod_OneShell_27: 7082601883868356829
+      Mod_OneShell_28: -8936652820963994257
+      Mod_OneShell_29: -6600229577638460427
+      Mod_OneShell_3: 1150463208690329304
+      Mod_OneShell_30: 4002009126713710773
+      Mod_OneShell_31: 8130138375564078817
+      Mod_OneShell_32: 477590676270745025
+      Mod_OneShell_33: 744229968119875990
+      Mod_OneShell_34: 1610155302108617482
+      Mod_OneShell_35: -8860975310209889291
+      Mod_OneShell_36: -6798297372303381473
+      Mod_OneShell_37: 2777419924269492639
+      Mod_OneShell_38: 54090448198830731
+      Mod_OneShell_39: 4600814592217324156
+      Mod_OneShell_4: -5888069234042111056
+      Mod_OneShell_40: -4135350827405743787
+      Mod_OneShell_41: -3149916350046377668
+      Mod_OneShell_42: -9019945420585244169
+      Mod_OneShell_43: 1464475675609554046
+      Mod_OneShell_44: -93432438027412039
+      Mod_OneShell_45: -7321617768971048228
+      Mod_OneShell_46: 1805957239995030885
+      Mod_OneShell_47: -2474707107439850843
+      Mod_OneShell_48: -4357011022236292131
+      Mod_OneShell_49: 1800463406466992875
+      Mod_OneShell_5: -87955209084811967
+      Mod_OneShell_50: -811348072183065879
+      Mod_OneShell_51: 278211357243013714
+      Mod_OneShell_52: 4617304919833343448
+      Mod_OneShell_53: -4776658900500022693
+      Mod_OneShell_54: -6265897520044579201
+      Mod_OneShell_55: -1862337149031688995
+      Mod_OneShell_56: 2053210209638981557
+      Mod_OneShell_57: -7140492964786295034
+      Mod_OneShell_6: -5240874761425620669
+      Mod_OneShell_7: -4178742778332568151
+      Mod_OneShell_8: -4651306311221364225
+      Mod_OneShell_9: 6942020497531436938
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
