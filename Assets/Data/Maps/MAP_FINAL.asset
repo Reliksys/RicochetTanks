@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb241c7f17b4604804253a97e3e8b22, type: 3}
   m_Name: MAP_FINAL
   m_EditorClassIdentifier: Assembly-CSharp::MapData
-  displayName: "\u041D\u043E\u0432\u0430\u044F \u043A\u0430\u0440\u0442\u0430"
-  description: 
-  prefab: {fileID: 0}
-  preview: {fileID: 0}
+  displayName: "\u0424\u0438\u043d\u0430\u043b"
+  description: "\u0421\u0430\u043c\u0430\u044f \u043f\u043b\u043e\u0442\u043d\u0430\u044f \u043a\u0430\u0440\u0442\u0430: \u043c\u043d\u043e\u0433\u043e \u0443\u043a\u0440\u044b\u0442\u0438\u0439 \u0438 \u0445\u0438\u0442\u0440\u044b\u0445 \u0443\u0433\u043b\u043e\u0432."
+  prefab: {fileID: 2355207227721770451, guid: a0b5c84d71634664f9b53755b1c42148, type: 3}
+  preview: {fileID: 21300000, guid: 8d16328a039843379a35fb77cb4f33de, type: 3}

@@ -29,6 +29,14 @@ public class GameBootstrap : MonoBehaviour
 
     public static GameObject CurrentMap { get; private set; }
 
+    [Header("Страховка: танк вылетел за карту")]
+    [Tooltip("Насколько глубоко во внешнюю стену может зайти центр танка, прежде чем его вернут на арену")]
+    [SerializeField] float outOfBoundsMargin = 0.6f;
+
+    Bounds arenaBounds;
+    bool hasArenaBounds;
+    float nextBoundsCheck;
+
     void Awake()
     {
         RunConfig.EnsureDefaults(database, testAsQuickPlay);
@@ -44,6 +52,12 @@ public class GameBootstrap : MonoBehaviour
 
     void Update()
     {
+        if (Time.time >= nextBoundsCheck)
+        {
+            nextBoundsCheck = Time.time + 0.25f;
+            KeepTanksInsideArena();
+        }
+
         if (!GameRules.Superhot) return;
         PlayerTank player = PlayerTank.Instance;
         float target = (player == null || player.IsMoving) ? 1f : superhotIdleScale;
@@ -87,9 +101,75 @@ public class GameBootstrap : MonoBehaviour
         }
         if (!found) return;
 
+        arenaBounds = bounds;
+        hasArenaBounds = true;
+
         float size = Mathf.Max(bounds.extents.y, bounds.extents.x / cam.aspect) + cameraPadding;
         cam.orthographicSize = Mathf.Max(minCameraSize, size);
         cam.transform.position = new Vector3(bounds.center.x, bounds.center.y, cam.transform.position.z);
+    }
+
+    // Если танк выдавило сквозь стену за пределы карты — возвращаем его на арену,
+    // иначе волна будет ждать врага, которого нельзя убить.
+    void KeepTanksInsideArena()
+    {
+        if (!hasArenaBounds || CurrentMap == null) return;
+
+        float minX = arenaBounds.min.x + outOfBoundsMargin, maxX = arenaBounds.max.x - outOfBoundsMargin;
+        float minY = arenaBounds.min.y + outOfBoundsMargin, maxY = arenaBounds.max.y - outOfBoundsMargin;
+
+        foreach (Health h in FindObjectsByType<Health>(FindObjectsSortMode.None))
+        {
+            if (h == null || h.IsDead) continue;
+            Vector2 p = h.transform.position;
+            if (p.x > minX && p.x < maxX && p.y > minY && p.y < maxY) continue;
+
+            bool isPlayer = h.GetComponent<PlayerTank>() != null;
+            Vector2? target = isPlayer ? PlayerSpawnPosition() : FreeEnemySpawnPosition();
+            if (target == null)
+            {
+                if (!isPlayer) Destroy(h.gameObject); // некуда вернуть — убираем, чтобы волна не зависла
+                continue;
+            }
+
+            Debug.LogWarning($"[Arena] {h.name} вылетел за карту в {p}, возвращаю в {target.Value}");
+            if (h.TryGetComponent(out Rigidbody2D rb))
+            {
+                rb.position = target.Value;
+                rb.linearVelocity = Vector2.zero;
+            }
+            h.transform.position = new Vector3(target.Value.x, target.Value.y, 0f);
+            Physics2D.SyncTransforms();
+        }
+    }
+
+    Vector2? PlayerSpawnPosition()
+    {
+        Transform t = FindDeep(CurrentMap.transform, "PlayerSpawn");
+        return t != null ? (Vector2)t.position : (Vector2?)null;
+    }
+
+    // Точка спавна врагов подальше от игрока, на которой сейчас не стоит танк
+    Vector2? FreeEnemySpawnPosition()
+    {
+        Transform root = FindDeep(CurrentMap.transform, "EnemySpawns");
+        if (root == null) return null;
+        PlayerTank player = PlayerTank.Instance;
+        Vector2 playerPos = player != null ? (Vector2)player.transform.position : Vector2.zero;
+
+        Vector2? best = null;
+        float bestDist = -1f;
+        foreach (Transform point in root)
+        {
+            bool occupied = false;
+            foreach (Collider2D c in Physics2D.OverlapCircleAll(point.position, 0.6f))
+                if (!c.isTrigger && c.GetComponentInParent<IDamageable>() != null) { occupied = true; break; }
+            if (occupied) continue;
+
+            float d = Vector2.Distance(point.position, playerPos);
+            if (d > bestDist) { bestDist = d; best = point.position; }
+        }
+        return best;
     }
 
     // Поиск дочернего объекта по имени на любой глубине

@@ -189,7 +189,7 @@ public class WaveManager : MonoBehaviour
     bool IsFree(Vector2 pos)
     {
         foreach (Collider2D c in Physics2D.OverlapCircleAll(pos, spawnCheckRadius))
-            if (!c.isTrigger) return false;
+            if (!c.isTrigger && c.GetComponentInParent<IDamageable>() != null) return false;
         return true;
     }
 }

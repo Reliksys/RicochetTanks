@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f06a1c6b174ed5bcbb6c26c33557c7, type: 3}
   m_Name: GameDatabase
   m_EditorClassIdentifier: 
-  maps: []
+  maps:
+  - {fileID: 11400000, guid: 4123e281af38ce4489386b8ca560a831, type: 2}
+  - {fileID: 11400000, guid: d50e75fc7573f084fab74ae0e7984406, type: 2}
+  - {fileID: 11400000, guid: b22d9a4dcd317564c9b656e6d4ffa22d, type: 2}
+  - {fileID: 11400000, guid: adf600f538244cc4694bff19dd6fd7da, type: 2}
+  - {fileID: 11400000, guid: e1a171ef496c54646958238ad40d4d1d, type: 2}
   modifiers:
   - {fileID: 11400000, guid: bbb81bfd7ac94139b56ca98bd40df8d0, type: 2}
   - {fileID: 11400000, guid: 256cca249d9c42008afa3de3fa3df8d8, type: 2}

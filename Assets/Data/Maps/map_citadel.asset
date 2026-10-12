@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb241c7f17b4604804253a97e3e8b22, type: 3}
   m_Name: map_citadel
   m_EditorClassIdentifier: Assembly-CSharp::MapData
-  displayName: "\u041D\u043E\u0432\u0430\u044F \u043A\u0430\u0440\u0442\u0430"
-  description: 
-  prefab: {fileID: 0}
-  preview: {fileID: 0}
+  displayName: "\u0426\u0438\u0442\u0430\u0434\u0435\u043b\u044c"
+  description: "\u0423\u0433\u043b\u043e\u0432\u044b\u0435 \u0443\u043a\u0440\u0435\u043f\u043b\u0435\u043d\u0438\u044f \u0438 \u0441\u0442\u0435\u043d\u044b \u0432 \u0446\u0435\u043d\u0442\u0440\u0435: \u043f\u0440\u044f\u0447\u044c\u0441\u044f \u0438 \u0441\u0442\u0440\u0435\u043b\u044f\u0439 \u0438\u0437-\u0437\u0430 \u0443\u0433\u043b\u0430."
+  prefab: {fileID: 5162214731070450161, guid: 264c10141aa987b48a5b195504cac69b, type: 3}
+  preview: {fileID: 21300000, guid: 1af26ad6881649e291e6fbc32eb04f2f, type: 3}

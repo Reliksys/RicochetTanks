@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb241c7f17b4604804253a97e3e8b22, type: 3}
   m_Name: map_koridors
   m_EditorClassIdentifier: Assembly-CSharp::MapData
-  displayName: "\u041D\u043E\u0432\u0430\u044F \u043A\u0430\u0440\u0442\u0430"
-  description: 
-  prefab: {fileID: 0}
-  preview: {fileID: 0}
+  displayName: "\u041a\u043e\u0440\u0438\u0434\u043e\u0440\u044b"
+  description: "\u041b\u0430\u0431\u0438\u0440\u0438\u043d\u0442 \u0443\u0437\u043a\u0438\u0445 \u043f\u0440\u043e\u0445\u043e\u0434\u043e\u0432. \u0411\u0435\u0437 \u0440\u0438\u043a\u043e\u0448\u0435\u0442\u0430 \u0442\u0443\u0442 \u043d\u0435 \u043f\u043e\u0431\u0435\u0434\u0438\u0442\u044c."
+  prefab: {fileID: 8387856571172621546, guid: 6581af2e37f1771489bd6e92a5c3fb36, type: 3}
+  preview: {fileID: 21300000, guid: 5b896d9446714900ad4fd11488d99cbf, type: 3}
