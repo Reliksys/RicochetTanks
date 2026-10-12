@@ -27,6 +27,15 @@ public class EnemyAI : MonoBehaviour
     [Tooltip("Максимальная длина пути снаряда в симуляции")]
     [SerializeField] float maxPathLength = 40f;
 
+    [Header("Рикошет")]
+    [SerializeField] bool useRicochet = true;
+    [Tooltip("Как часто искать выстрел с отскоком, с")]
+    [SerializeField] float ricochetSearchInterval = 0.25f;
+    [Tooltip("Сколько направлений перебирать (120 = шаг 3°)")]
+    [SerializeField] int ricochetSamples = 120;
+    [Tooltip("Штраф за каждый отскок (в единицах длины пути): чем больше, тем сильнее бот предпочитает меньше отскоков")]
+    [SerializeField] float bouncePenalty = 10f;
+
     [Header("Движение (не для турели)")]
     [SerializeField] float moveSpeed = 2.5f;         // × GameRules.EnemySpeedMultiplier
     [SerializeField] float bodyTurnSpeed = 540f;
@@ -39,6 +48,8 @@ public class EnemyAI : MonoBehaviour
 
     public bool Stationary => stationary;
 
+    enum ShotMode { None, Direct, Ricochet }
+
     Rigidbody2D rb;
     TankGun gun;
     Bullet bulletPrefab;
@@ -48,13 +59,23 @@ public class EnemyAI : MonoBehaviour
 
     float fireTimer;            // до следующего разрешённого выстрела
     float aimReadyTimer;        // сколько линия огня уже держится
-    float aimErrorCurrent;      // разброс на текущий выстрел
+    float aimErrorCurrent;      // разброс прямого выстрела на текущий выстрел
     Vector2 moveDir;            // куда едем (пока всегда ноль: движение — следующий шаг)
 
-    bool hasShot;               // есть ли сейчас линия огня
+    ShotMode mode;              // какой выстрел сейчас готовим
     Vector2 desiredDir;         // куда хотим навести ствол
 
-    readonly List<Vector3> debugPath = new List<Vector3>();
+    // Рикошет: найденный диапазон углов, где пуля попадает в игрока
+    float ricochetTimer;
+    bool hasRicochet;
+    float ricochetFromDeg, ricochetToDeg;
+    float ricochetPick;         // где внутри диапазона целимся (0..1), новый на каждый выстрел
+    bool[] sampleHits;
+    int[] sampleBounces;
+    float[] sampleLengths;
+
+    readonly List<Vector3> debugPath = new List<Vector3>();      // проверка перед выстрелом
+    readonly List<Vector3> ricochetPath = new List<Vector3>();   // найденный рикошет
 
     void Awake()
     {
@@ -76,8 +97,13 @@ public class EnemyAI : MonoBehaviour
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         }
 
+        ricochetSamples = Mathf.Max(8, ricochetSamples);
+        sampleHits = new bool[ricochetSamples];
+        sampleBounces = new int[ricochetSamples];
+        sampleLengths = new float[ricochetSamples];
+
         fireTimer = firstShotDelay;
-        aimErrorCurrent = Random.Range(-aimErrorDeg, aimErrorDeg);
+        RollAim();
     }
 
     void OnEnable() => All.Add(this);
@@ -97,18 +123,18 @@ public class EnemyAI : MonoBehaviour
 
         if (player == null || bulletPrefab == null)
         {
-            hasShot = false;
+            mode = ShotMode.None;
             aimReadyTimer = 0f;
             moveDir = Vector2.zero;
             return; // игрок мёртв — стоим, не стреляем
         }
 
-        ChooseShot();
+        ChooseShot(dt);
 
         // Ствол доворачивается сам (с turretTurnSpeed, в Суперхоте — медленнее)
         gun.AimAt(desiredDir);
 
-        aimReadyTimer = hasShot ? aimReadyTimer + dt : 0f;
+        aimReadyTimer = mode != ShotMode.None ? aimReadyTimer + dt : 0f;
         TryShoot();
 
         RotateBody(dt);
@@ -122,34 +148,55 @@ public class EnemyAI : MonoBehaviour
 
     // ---------- Выбор выстрела ----------
 
-    void ChooseShot()
+    void ChooseShot(float dt)
     {
         Vector2 self = transform.position;
         Vector2 target = player.transform.position;
         Vector2 targetVel = playerRb != null ? playerRb.linearVelocity : Vector2.zero;
 
-        // 1) С упреждением
+        // 1) Прямо с упреждением
         Vector2 lead = LeadPoint(self, target, targetVel);
         if (HasDirectLine(self, lead))
         {
-            SetShot(lead - self);
+            SetDirect(lead - self);
             return;
         }
         // 2) Прямо в текущую позицию (упреждённая точка, например, в стене)
         if (HasDirectLine(self, target))
         {
-            SetShot(target - self);
+            SetDirect(target - self);
             return;
         }
-        // Линии огня нет — просто следим башней за игроком
-        hasShot = false;
+
+        // 3) Рикошетом (по текущей позиции игрока)
+        if (useRicochet)
+        {
+            ricochetTimer -= dt;
+            if (ricochetTimer <= 0f)
+            {
+                ricochetTimer = ricochetSearchInterval;
+                SearchRicochet();
+            }
+            if (hasRicochet)
+            {
+                mode = ShotMode.Ricochet;
+                desiredDir = DirFromAngle(Mathf.Lerp(ricochetFromDeg, ricochetToDeg, ricochetPick));
+                return;
+            }
+        }
+
+        // Выстрела нет — просто следим башней за игроком
+        mode = ShotMode.None;
         desiredDir = target - self;
     }
 
-    void SetShot(Vector2 dir)
+    void SetDirect(Vector2 dir)
     {
-        hasShot = true;
+        mode = ShotMode.Direct;
         desiredDir = Rotate(dir.normalized, aimErrorCurrent);
+        // Прямая линия есть — старый рикошет устарел; когда линия пропадёт, ищем сразу
+        hasRicochet = false;
+        ricochetTimer = 0f;
     }
 
     // Точка упреждения: решаем |D + V·t| = d0 + s·t (снаряд стартует из центра и сразу пролетает d0).
@@ -196,18 +243,73 @@ public class EnemyAI : MonoBehaviour
         return IsPlayer(hit.collider);
     }
 
+    // Перебираем направления по кругу, ищем подряд идущие углы, где первым попадаем в игрока.
+    // Из таких «окон» берём лучшее (меньше отскоков, короче путь) и целимся внутрь окна —
+    // так разброс прицела не уводит пулю мимо.
+    void SearchRicochet()
+    {
+        int n = ricochetSamples;
+        float step = 360f / n;
+
+        int start = -1; // индекс-промах, с него начинаем обход, чтобы окна не рвались на 0°/360°
+        for (int i = 0; i < n; i++)
+        {
+            IDamageable first = SimulateShot(DirFromAngle(i * step), out sampleLengths[i], out sampleBounces[i]);
+            sampleHits[i] = IsPlayer(first);
+            if (!sampleHits[i] && start < 0) start = i;
+        }
+
+        hasRicochet = false;
+        if (start < 0) return; // попадаем во все стороны — так не бывает, пропускаем
+
+        float bestScore = float.MaxValue;
+        int runFrom = -1;
+        for (int k = 1; k <= n; k++)
+        {
+            int idx = (start + k) % n;
+            if (sampleHits[idx])
+            {
+                if (runFrom < 0) runFrom = k;
+                continue;
+            }
+            if (runFrom < 0) continue;
+
+            // Окно [runFrom; k-1] закончилось — оцениваем по середине
+            int runTo = k - 1;
+            int mid = (start + (runFrom + runTo) / 2) % n;
+            float score = sampleBounces[mid] * bouncePenalty + sampleLengths[mid];
+            if (score < bestScore)
+            {
+                bestScore = score;
+                hasRicochet = true;
+                ricochetFromDeg = (start + runFrom) * step;
+                ricochetToDeg = (start + runTo) * step;
+            }
+            runFrom = -1;
+        }
+
+        if (hasRicochet)
+            SimulateShot(DirFromAngle((ricochetFromDeg + ricochetToDeg) * 0.5f), out _, out _, ricochetPath);
+        else
+            ricochetPath.Clear();
+    }
+
     // ---------- Выстрел ----------
 
     void TryShoot()
     {
-        if (!hasShot || fireTimer > 0f || aimReadyTimer < reactionTime || !gun.CanFire) return;
+        if (mode == ShotMode.None || fireTimer > 0f || aimReadyTimer < reactionTime || !gun.CanFire) return;
 
         // Ствол ещё не довернулся
         if (Vector2.Angle(gun.AimDirection, desiredDir) > fireAngleTolerance) return;
 
         // Проверяем реальное направление ствола: не попадём ли в себя или в союзника
-        IDamageable first = SimulateShot(gun.AimDirection, out _, debugPath);
-        if (first != null && !IsPlayer(first)) return;
+        IDamageable first = SimulateShot(gun.AimDirection, out _, out _, debugPath);
+        if (mode == ShotMode.Ricochet)
+        {
+            if (!IsPlayer(first)) return; // рикошет — только если точно долетит до игрока
+        }
+        else if (first != null && !IsPlayer(first)) return;
 
         if (!gun.TryFire()) return;
 
@@ -215,24 +317,33 @@ public class EnemyAI : MonoBehaviour
         float rate = Mathf.Max(0.01f, GameRules.EnemyFireRateMultiplier);
         fireTimer = Random.Range(fireIntervalMin, fireIntervalMax) / rate;
         aimReadyTimer = 0f;
+        RollAim();
+    }
+
+    // Новый разброс на следующий выстрел
+    void RollAim()
+    {
         aimErrorCurrent = Random.Range(-aimErrorDeg, aimErrorDeg);
+        ricochetPick = Random.Range(0.3f, 0.7f);
     }
 
     // Точная копия логики полёта Bullet: снаряд из центра танка, свой танк игнорируется
     // до первого отскока (после — только если включён Бумеранг).
-    // Возвращает первую цель на пути (или null) и длину пути до конца/цели.
-    public IDamageable SimulateShot(Vector2 dir, out float pathLength, List<Vector3> points = null)
+    // Возвращает первую цель на пути (или null), длину пути и число отскоков до неё.
+    public IDamageable SimulateShot(Vector2 dir, out float pathLength, out int bounceCount, List<Vector3> points = null)
     {
         Vector2 pos = transform.position;
         dir = dir.normalized;
         float left = maxPathLength;
         int maxBounces = bulletPrefab.MaxBounces;
         pathLength = 0f;
+        bounceCount = 0;
         points?.Clear();
         points?.Add(pos);
 
         for (int bounces = 0; bounces <= maxBounces && left > 0f; bounces++)
         {
+            bounceCount = bounces;
             GameObject ignore = (bounces == 0 || !GameRules.OwnBulletsHurtOwner) ? gameObject : null;
             if (!Ricochet.Cast(pos, bulletPrefab.Radius, dir, left, bulletPrefab.HitMask, ignore, out RaycastHit2D hit))
             {
@@ -267,6 +378,12 @@ public class EnemyAI : MonoBehaviour
 
     bool IsPlayer(IDamageable d) => player != null && d is Component comp && comp.transform.IsChildOf(player.transform);
 
+    static Vector2 DirFromAngle(float degrees)
+    {
+        float r = degrees * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(r), Mathf.Sin(r));
+    }
+
     static Vector2 Rotate(Vector2 v, float degrees)
     {
         float r = degrees * Mathf.Deg2Rad;
@@ -276,13 +393,21 @@ public class EnemyAI : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        // Последняя проверенная траектория выстрела
+        // Найденный рикошет
+        if (hasRicochet)
+        {
+            Gizmos.color = Color.yellow;
+            for (int i = 1; i < ricochetPath.Count; i++)
+                Gizmos.DrawLine(ricochetPath[i - 1], ricochetPath[i]);
+        }
+
+        // Последняя проверка перед выстрелом
         Gizmos.color = Color.red;
         for (int i = 1; i < debugPath.Count; i++)
             Gizmos.DrawLine(debugPath[i - 1], debugPath[i]);
 
-        // Куда хотим навести ствол
-        Gizmos.color = hasShot ? Color.green : Color.gray;
+        // Куда хотим навести ствол: зелёный — прямой, жёлтый — рикошет, серый — нет выстрела
+        Gizmos.color = mode == ShotMode.Direct ? Color.green : mode == ShotMode.Ricochet ? Color.yellow : Color.gray;
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + desiredDir.normalized * 2f);
     }
 }
