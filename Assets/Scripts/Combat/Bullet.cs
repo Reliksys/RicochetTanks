@@ -18,6 +18,10 @@ public class Bullet : MonoBehaviour
     public int MaxBounces => maxBounces + GameRules.ExtraBounces;
     public LayerMask HitMask => hitMask;
     public GameObject Owner { get; private set; }
+    public Vector2 Direction => direction;                            // текущее направление полёта
+    public float Speed => speed;                                      // базовая скорость (из префаба)
+    public float CurrentSpeed => speed * GameRules.BulletTimeScale;   // с учётом Суперхота
+    public Vector2 Velocity => direction * CurrentSpeed;              // для уклонения ИИ
     public int Bounces { get; private set; }
 
     // Все живые снаряды (нужно для лимита снарядов на экране и для ИИ уклонения)

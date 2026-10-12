@@ -10,7 +10,7 @@ public class TankGun : MonoBehaviour
     [SerializeField] Bullet bulletPrefab;
     [SerializeField] float fireCooldown = 0.3f;
     [SerializeField] int maxActiveBullets = 5;
-    [Tooltip("Градусов в секунду. 0 = мгновенно (для игрока). Врагам лучше 120-200.")]
+    [Tooltip("Градусов в секунду. 0 = мгновенно (для игрока). Врагам лучше 120-200. В Суперхоте замедляется вместе со снарядами.")]
     [SerializeField] float turretTurnSpeed = 0f;
 
     public Vector2 AimDirection { get; private set; } = Vector2.up; // куда реально смотрит ствол
@@ -33,7 +33,7 @@ public class TankGun : MonoBehaviour
         {
             turret.rotation = turretTurnSpeed <= 0f
                 ? target
-                : Quaternion.RotateTowards(turret.rotation, target, turretTurnSpeed * Time.deltaTime);
+                : Quaternion.RotateTowards(turret.rotation, target, turretTurnSpeed * Time.deltaTime * GameRules.BulletTimeScale);
             AimDirection = turret.up;
         }
         else
