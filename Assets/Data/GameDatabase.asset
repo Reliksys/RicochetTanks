@@ -24,6 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83f981cc59c64b8b99cec6eb69e65e4c, type: 2}
   - {fileID: 11400000, guid: 83cd5c80b80f4fb3818b2596e58ac0cf, type: 2}
   - {fileID: 11400000, guid: 7939f84407ac487e841734ac7021acea, type: 2}
+  - {fileID: 11400000, guid: 1f0a24052fd6ec1ad94a29138caf4bdf, type: 2}
   presets:
   - {fileID: 11400000, guid: 64621b37c50e412a91102f30b50f706b, type: 2}
   - {fileID: 11400000, guid: 632a6bf8504747bfb13cdd834e911c1f, type: 2}

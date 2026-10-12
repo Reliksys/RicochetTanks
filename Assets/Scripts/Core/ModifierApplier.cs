@@ -27,6 +27,7 @@ public static class ModifierApplier
             GameRules.EnemyCountMultiplier *= m.enemyCountMultiplier;
             GameRules.EnemySpeedMultiplier *= m.enemySpeedMultiplier;
             GameRules.EnemyFireRateMultiplier *= m.enemyFireRateMultiplier;
+            if (m.enemyDodge) GameRules.EnemyDodge = true;
 
             if (m.powerUps) GameRules.PowerUpsEnabled = true;
         }

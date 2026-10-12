@@ -53,6 +53,19 @@ public class EnemyAI : MonoBehaviour
     [Tooltip("Сколько случайных клеток оценивать при выборе позиции")]
     [SerializeField] int candidateSamples = 40;
 
+    [Header("Уклонение (только с модификатором «Ловкие враги»)")]
+    [Tooltip("На сколько секунд вперёд смотреть на летящие снаряды")]
+    [SerializeField] float dodgeLookAhead = 0.7f;
+    [Tooltip("Снаряд опасен, если пройдёт ближе этого от центра танка")]
+    [SerializeField] float dodgeDangerRadius = 0.7f;
+    [Tooltip("Через сколько секунд бот замечает снаряд")]
+    [SerializeField] float dodgeReaction = 0.15f;
+    [Tooltip("Шанс, что бот вообще станет уворачиваться от конкретного снаряда")]
+    [Range(0f, 1f)]
+    [SerializeField] float dodgeChance = 0.7f;
+    [SerializeField] float dodgeDuration = 0.35f;
+    [SerializeField] float dodgeSpeedMultiplier = 1.4f;
+
     // Все живые враги (для WaveManager и проверки союзников)
     public static readonly List<EnemyAI> All = new List<EnemyAI>();
 
@@ -90,6 +103,12 @@ public class EnemyAI : MonoBehaviour
     Vector2 destination;
     Vector2 playerPosAtChoose;
     Vector2 lastPos;
+    // Уклонение
+    float dodgeTimer;
+    Vector2 dodgeDir;
+    readonly Dictionary<Bullet, float> noticedBullets = new Dictionary<Bullet, float>(); // сколько видим снаряд; <0 — решили не уворачиваться
+    readonly List<Bullet> staleBullets = new List<Bullet>();
+
     const float ArriveDistance = 0.15f;
     const float PathRadius = 0.38f;   // радиус танка для сглаживания пути
 
@@ -170,14 +189,89 @@ public class EnemyAI : MonoBehaviour
         aimReadyTimer = mode != ShotMode.None ? aimReadyTimer + dt : 0f;
         TryShoot();
 
-        if (!stationary) UpdateMovement(dt);
+        if (!stationary && !UpdateDodge(dt)) UpdateMovement(dt);
         RotateBody(dt);
     }
 
     void FixedUpdate()
     {
         if (stationary) return;
-        rb.linearVelocity = moveDir * (moveSpeed * GameRules.EnemySpeedMultiplier * GameRules.BulletTimeScale);
+        float boost = dodgeTimer > 0f ? dodgeSpeedMultiplier : 1f;
+        rb.linearVelocity = moveDir * (moveSpeed * boost * GameRules.EnemySpeedMultiplier * GameRules.BulletTimeScale);
+    }
+
+    // ---------- Уклонение ----------
+
+    // true — сейчас уворачиваемся (обычное движение пропускаем)
+    bool UpdateDodge(float dt)
+    {
+        if (!GameRules.EnemyDodge || !ArenaGrid.Ready) return false;
+
+        if (dodgeTimer > 0f)
+        {
+            dodgeTimer -= dt;
+            moveDir = dodgeDir;
+            if (dodgeTimer <= 0f)
+            {
+                // Увернулись — сразу выбираем новую позицию
+                moving = false;
+                holdTimer = 0f;
+            }
+            return true;
+        }
+
+        if (!FindThreat(dt, out Vector2 away)) return false;
+        dodgeDir = away;
+        dodgeTimer = dodgeDuration;
+        moveDir = away;
+        return true;
+    }
+
+    // Ищем снаряд, который скоро пройдёт рядом. away — куда отъезжать (вбок от линии полёта).
+    bool FindThreat(float dt, out Vector2 away)
+    {
+        away = Vector2.zero;
+        Vector2 pos = transform.position;
+
+        // Чистим уничтоженные снаряды
+        staleBullets.Clear();
+        foreach (Bullet b in noticedBullets.Keys)
+            if (b == null) staleBullets.Add(b);
+        foreach (Bullet b in staleBullets) noticedBullets.Remove(b);
+
+        foreach (Bullet b in Bullet.Active)
+        {
+            // Свой снаряд опасен только после отскока и при Бумеранге
+            if (b.Owner == gameObject && (b.Bounces == 0 || !GameRules.OwnBulletsHurtOwner)) continue;
+            // Снаряд стоит (Суперхот) — сейчас не опасен. Velocity бывает 0, на него не делим.
+            if (b.Velocity.sqrMagnitude < 0.0001f) continue;
+
+            Vector2 dir = b.Direction;
+            Vector2 rel = pos - (Vector2)b.transform.position;
+            float along = Vector2.Dot(rel, dir);                 // сколько снаряду лететь до точки сближения
+            if (along < 0f || along > b.Speed * dodgeLookAhead) continue; // уже пролетел или ещё далеко
+            Vector2 offset = rel - dir * along;                  // от линии полёта до нас
+            if (offset.magnitude > dodgeDangerRadius) continue;
+
+            // Снаряд упрётся в стену раньше, чем долетит до нас
+            if (Ricochet.Cast(b.transform.position, b.Radius, dir, along, b.HitMask, b.Owner, out RaycastHit2D hit)
+                && ArenaGrid.IsWall(hit.collider)) continue;
+
+            // Реакция и шанс: решаем один раз на снаряд
+            if (!noticedBullets.TryGetValue(b, out float seen))
+                seen = Random.value < dodgeChance ? 0f : -1f;
+            if (seen < 0f) { noticedBullets[b] = seen; continue; }
+            seen += dt;
+            noticedBullets[b] = seen;
+            if (seen < dodgeReaction) continue;
+
+            // Уходим вбок от линии полёта; если там стена — в другую сторону
+            Vector2 side = offset.sqrMagnitude > 0.0001f ? offset.normalized : new Vector2(-dir.y, dir.x);
+            if (ArenaGrid.WallBetween(pos, pos + side, PathRadius)) side = -side;
+            away = side;
+            return true;
+        }
+        return false;
     }
 
     // ---------- Выбор выстрела ----------

@@ -31,6 +31,8 @@ public class ModifierData : ScriptableObject
     public float enemyCountMultiplier = 1f;
     public float enemySpeedMultiplier = 1f;
     public float enemyFireRateMultiplier = 1f;
+    [Tooltip("Враги уворачиваются от снарядов")]
+    public bool enemyDodge = false;
 
     [Header("Прочее")]
     public bool powerUps = false;
