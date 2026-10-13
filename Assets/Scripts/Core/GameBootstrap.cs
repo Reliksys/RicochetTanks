@@ -122,7 +122,7 @@ public class GameBootstrap : MonoBehaviour
         float minX = arenaBounds.min.x + outOfBoundsMargin, maxX = arenaBounds.max.x - outOfBoundsMargin;
         float minY = arenaBounds.min.y + outOfBoundsMargin, maxY = arenaBounds.max.y - outOfBoundsMargin;
 
-        foreach (Health h in FindObjectsByType<Health>(FindObjectsSortMode.None))
+        foreach (Health h in FindObjectsByType<Health>())
         {
             if (h == null || h.IsDead) continue;
             Vector2 p = h.transform.position;

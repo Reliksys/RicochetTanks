@@ -9,4 +9,6 @@ public class MapData : ScriptableObject
     [TextArea(1, 3)] public string description = "";
     public GameObject prefab;
     public Sprite preview;
+    [Tooltip("Может ли карта выпасть в «Быстрой игре». Необычные карты (Коридоры) — выключить, они доступны в «Настроить бой».")]
+    public bool allowInQuickPlay = true;
 }

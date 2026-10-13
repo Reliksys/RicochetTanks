@@ -16,9 +16,11 @@ public class GameDatabase : ScriptableObject
     public int quickPlayMinModifiers = 1;
     public int quickPlayMaxModifiers = 2;
 
+    // Случайная карта для «Быстрой игры»: только с галочкой allowInQuickPlay (если таких нет — любая)
     public MapData RandomMap()
     {
-        var valid = maps.FindAll(m => m != null && m.prefab != null);
+        var valid = maps.FindAll(m => m != null && m.prefab != null && m.allowInQuickPlay);
+        if (valid.Count == 0) valid = maps.FindAll(m => m != null && m.prefab != null);
         return valid.Count > 0 ? valid[Random.Range(0, valid.Count)] : null;
     }
 
