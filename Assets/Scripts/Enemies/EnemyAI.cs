@@ -76,7 +76,7 @@ public class EnemyAI : MonoBehaviour
     // Куда бот едет (или где стоит) — чтобы союзники не лезли в одну точку
     public Vector2 Destination => moving ? destination : (Vector2)transform.position;
 
-    enum ShotMode { None, Direct, Ricochet }
+    enum ShotMode { None, Direct, Ricochet, Bush }
 
     Rigidbody2D rb;
     TankGun gun;
@@ -126,6 +126,12 @@ public class EnemyAI : MonoBehaviour
 
     MultiBarrel multiBarrel;    // двухствольный танк (или null)
     readonly List<Vector2> barrelOffsets = new List<Vector2>();
+
+    // Кусты: если к игроку не проехать или куст закрывает линию огня — простреливаем его
+    bool trappedByBushes;       // игрок недостижим по сетке (заперт кустами)
+    Bush bushTarget;
+    float bushSearchTimer;
+    const float BushSearchRadius = 7f;
 
     readonly List<Vector3> debugPath = new List<Vector3>();      // проверка перед выстрелом
     readonly List<Vector3> ricochetPath = new List<Vector3>();   // найденный рикошет
@@ -317,9 +323,66 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
+        // 4) Куст мешает: закрывает линию огня или запер бота — стреляем в куст
+        if (FindBushTarget(dt, self, target, out Vector2 bushPos))
+        {
+            mode = ShotMode.Bush;
+            desiredDir = bushPos - self;
+            return;
+        }
+
         // Выстрела нет — просто следим башней за игроком
         mode = ShotMode.None;
         desiredDir = target - self;
+    }
+
+    // Куст, в который стоит стрелять: (а) первый на прямой к игроку; (б) если бот заперт — ближайший видимый
+    bool FindBushTarget(float dt, Vector2 self, Vector2 target, out Vector2 bushPos)
+    {
+        bushPos = default;
+
+        // (а) прямая к игроку упирается в куст
+        Vector2 toPlayer = target - self;
+        float dist = toPlayer.magnitude;
+        if (dist > 0.01f &&
+            Ricochet.Cast(self, bulletPrefab.Radius, toPlayer / dist, dist, bulletPrefab.HitMask, gameObject, out RaycastHit2D hit) &&
+            hit.collider.TryGetComponent(out Bush blocking))
+        {
+            bushTarget = blocking;
+            bushPos = blocking.transform.position;
+            return true;
+        }
+
+        // (б) заперт: ищем ближайший куст, до которого есть прямая линия (не каждый кадр)
+        if (!trappedByBushes) { bushTarget = null; return false; }
+        bushSearchTimer -= dt;
+        if (bushTarget == null || bushSearchTimer <= 0f)
+        {
+            bushSearchTimer = 0.5f;
+            bushTarget = NearestVisibleBush(self);
+        }
+        if (bushTarget == null) return false;
+        bushPos = bushTarget.transform.position;
+        return true;
+    }
+
+    Bush NearestVisibleBush(Vector2 self)
+    {
+        Bush best = null;
+        float bestDist = float.MaxValue;
+        foreach (Collider2D c in Physics2D.OverlapCircleAll(self, BushSearchRadius))
+        {
+            if (!c.TryGetComponent(out Bush bush)) continue;
+            Vector2 d = (Vector2)c.transform.position - self;
+            float len = d.magnitude;
+            if (len >= bestDist || len < 0.01f) continue;
+            // первым на пути должен быть именно этот куст
+            if (!Ricochet.Cast(self, bulletPrefab.Radius, d / len, len + 0.5f, bulletPrefab.HitMask, gameObject, out RaycastHit2D h)
+                || h.collider != c) continue;
+            best = bush;
+            bestDist = len;
+        }
+        return best;
     }
 
     void SetDirect(Vector2 dir)
@@ -539,6 +602,8 @@ public class EnemyAI : MonoBehaviour
         ArenaGrid.Bfs(start, bfsDist, bfsParent, reachedCells);
 
         Vector2 playerPos = player.transform.position;
+        int playerCell = ArenaGrid.CellOf(playerPos);
+        trappedByBushes = playerCell >= 0 && bfsDist[playerCell] < 0; // к игроку не проехать — будем стрелять по кустам
         int best = start;
         float bestScore = ScoreCell(start, 0, playerPos);
         for (int i = 0; i < candidateSamples && reachedCells.Count > 0; i++)
@@ -602,6 +667,7 @@ public class EnemyAI : MonoBehaviour
         for (int i = 0; i < barrelOffsets.Count; i++)
         {
             IDamageable first = SimulateShot(dir, out _, out _, i == 0 ? debugPath : null, barrelOffsets[i]);
+            if (first is Bush && mode == ShotMode.Bush) continue; // стреляем по кусту — так и задумано
             if (first != null && !IsPlayer(first)) return false;
             if (first != null) hitsPlayer = true;
         }
@@ -710,7 +776,8 @@ public class EnemyAI : MonoBehaviour
         }
 
         // Куда хотим навести ствол: зелёный — прямой, жёлтый — рикошет, серый — нет выстрела
-        Gizmos.color = mode == ShotMode.Direct ? Color.green : mode == ShotMode.Ricochet ? Color.yellow : Color.gray;
+        Gizmos.color = mode == ShotMode.Direct ? Color.green : mode == ShotMode.Ricochet ? Color.yellow
+                     : mode == ShotMode.Bush ? Color.magenta : Color.gray;
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + desiredDir.normalized * 2f);
     }
 }
