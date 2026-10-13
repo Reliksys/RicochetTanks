@@ -71,6 +71,6 @@
 - **Маргарита Слободчикова** — графика, звук
 
 ## Использованные ресурсы
-- Графика танков и окружения: пак **Ground Shaker** от Zintoki — https://zintoki.itch.io/ground-shaker (проверьте лицензию на странице пака).
+- Графика танков и окружения: пак **Ground Shaker** от Zintoki — https://zintoki.itch.io/ground-shaker.
 - Звуки сгенерированы процедурно специально для игры.
 - Шрифт: Liberation Sans (TextMesh Pro, лицензия OFL).
